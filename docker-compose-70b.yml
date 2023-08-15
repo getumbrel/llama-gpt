@@ -14,3 +14,4 @@ services:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
       - 'DEFAULT_MODEL=/models/llama-2-70b-chat.bin'
+      - 'WAIT_HOSTS=llama-gpt-api:8000'

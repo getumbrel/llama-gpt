@@ -22,8 +22,12 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/next.config.js ./next.config.js
 COPY --from=build /app/next-i18next.config.js ./next-i18next.config.js
 
+## Add the wait script to the image
+COPY --from=ghcr.io/ufoscout/docker-compose-wait:latest /wait /wait
+
 # Expose the port the app will run on
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+# Start the application after the API is ready
+CMD /wait && npm start
+
