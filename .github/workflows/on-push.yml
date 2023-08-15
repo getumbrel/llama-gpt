@@ -19,8 +19,8 @@ jobs:
       - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/13B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:${{ github.sha }} --push .
       - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/13B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:latest --push .
       # 70B
-      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-70b-chat:${{ github.sha }} --push .
-      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-70b-chat:latest --push .
+      # - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-70b-chat:${{ github.sha }} --push .
+      # - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-70b-chat:latest --push .
 
   build_ui:
     runs-on: ubuntu-latest
