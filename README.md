@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://apps.umbrel.com/app/llama-gpt">
-    <img width="150" height="150" src="https://i.imgur.com/F0h1k80.png" alt="LlamaGPT" width="200" />
+    <img width="150" height="150" src="https://i.imgur.com/LI59cui.png" alt="LlamaGPT" width="200" />
   </a>
 </p>
 <p align="center">
