@@ -2,18 +2,12 @@ version: '3.6'
 
 services:
   llama-gpt-api:
-    # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest'
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest'
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
 
   llama-gpt-ui:
-    # image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
-    build:
-      context: ./ui
-      dockerfile: Dockerfile
+    image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
     ports:
       - 3000:3000
     environment:
