@@ -102,15 +102,30 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
   };
 
   const copyOnClick = () => {
-    if (!navigator.clipboard) return;
-
-    navigator.clipboard.writeText(message.content).then(() => {
-      setMessageCopied(true);
-      setTimeout(() => {
-        setMessageCopied(false);
-      }, 2000);
-    });
+    // fallback to allow copying to clipboard over http
+    const copyToClipboardFallback = (text: string) => {
+      let textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "absolute";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    };
+  
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(message.content);
+    } else {
+      copyToClipboardFallback(message.content);
+    }
+  
+    setMessageCopied(true);
+    setTimeout(() => {
+      setMessageCopied(false);
+    }, 2000);
   };
+  
 
   useEffect(() => {
     setMessageContent(message.content);
