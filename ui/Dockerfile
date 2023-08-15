@@ -22,12 +22,15 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/next.config.js ./next.config.js
 COPY --from=build /app/next-i18next.config.js ./next-i18next.config.js
 
-## Add the wait script to the image
+# Add the wait script to the image
 COPY --from=ghcr.io/ufoscout/docker-compose-wait:latest /wait /wait
+
+# Add the ping api script to the image
+COPY ./ping-api-to-load-model.js ./ping-api-to-load-model.js
 
 # Expose the port the app will run on
 EXPOSE 3000
 
 # Start the application after the API is ready
-CMD /wait && npm start
+CMD /wait && node ping-api-to-load-model.js && npm start
 
