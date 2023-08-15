@@ -2,11 +2,10 @@ version: '3.6'
 
 services:
   llama-gpt-api:
-    image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest'
-    # build:
-    # context: ./api
-    # dockerfile: Dockerfile
-    command: /bin/sh -c "make build && python3 -m llama_cpp.server --n_ctx 4096 --n_threads 8 --n_gpu_layers 0 --n_batch 2096"
+    # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest'
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
 
