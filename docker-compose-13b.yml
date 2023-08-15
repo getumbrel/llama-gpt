@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  llama-gpt-api:
+    image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:latest'
+    environment:
+      MODEL: '/models/llama-2-13b-chat.bin'
+
+  llama-gpt-ui:
+    image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
+    ports:
+      - 3000:3000
+    environment:
+      - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
+      - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
+      - 'DEFAULT_MODEL=/models/llama-2-13b-chat.bin'

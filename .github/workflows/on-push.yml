@@ -1,0 +1,32 @@
+name: Build Docker images on master push
+
+on:
+  push:
+    branch:
+      - master
+
+jobs:
+  build_api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - run: docker login --username "${{ github.actor }}" --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
+      - run: docker buildx create --use
+      # 7B
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:${{ github.sha }} --push .
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest --push .
+      # 13B
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/13B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:${{ github.sha }} --push .
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/13B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest --push .
+      # 70B
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:${{ github.sha }} --push .
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f api/70B.Dockerfile --tag ghcr.io/getumbrel/llama-gpt-api-llama-2-7b-chat:latest --push .
+
+  build_ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - run: docker login --username "${{ github.actor }}" --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
+      - run: docker buildx create --use
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f ui/Dockerfile --tag ghcr.io/getumbrel/llama-gpt-ui:${{ github.sha }} --push .
+      - run: docker buildx build --platform linux/amd64,linux/arm64 -f ui/Dockerfile --tag ghcr.io/getumbrel/llama-gpt-ui:latest --push .
