@@ -28,7 +28,7 @@
 
 ## Demo
 
-https://github.com/getumbrel/llama-gpt/assets/10330103/e35e1c1d-f6df-475b-9aa8-55a0b30cd65a
+https://github.com/getumbrel/llama-gpt/assets/10330103/5d1a76b8-ed03-4a51-90bd-12ebfaf1e6cd
 
 ## How to install
 
