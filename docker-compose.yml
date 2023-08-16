@@ -9,7 +9,7 @@ services:
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
     ports:
-      - 3000:3000
+      - 9001:9001
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
