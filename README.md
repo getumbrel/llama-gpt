@@ -38,7 +38,7 @@ Running LlamaGPT on an [umbrelOS](https://umbrel.com) home server is one click. 
 
 <!-- Todo: update badge link after launch  -->
 
-[![LlamaGPT on Umbrel App Store](https://apps.umbrel.com/app/nostr-relay/badge-dark.svg)](https://apps.umbrel.com/app/llama-gpt)
+[![LlamaGPT on Umbrel App Store](https://apps.umbrel.com/app/llama-gpt/badge-light.svg)](https://apps.umbrel.com/app/llama-gpt)
 
 ### Install LlamaGPT anywhere else
 
