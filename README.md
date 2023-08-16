@@ -94,16 +94,14 @@ Unfortunately, we don't have any benchmarks for this model yet. If you have one,
 
 ## Roadmap and contributing
 
-We're working on adding more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
+We're looking to add more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
 
 - Add CUDA and Metal support.
 - Moving the model out of the Docker image and into a separate volume.
-- Updating the front-end to show model download progress, and allow users to switch between models.
+- Updating the front-end to show model download progress, and to allow users to switch between models.
 - Making it easy to run custom models.
 
-If you're a developer looking to help but not sure where to begin, check out [these issues](https://github.com/getumbrel/llama-gpt/labels/good%20first%20issue) that have specifically been marked as being friendly to new contributors.
-
-If you're looking for a bigger challenge, before opening a pull request please create an issue to get feedback, discuss the best way to tackle the challenge, and to ensure that there's no duplication of work.
+If you're a developer who'd like to help with any of these, please open an issue to discuss the best way to tackle the challenge. If you're looking to help but not sure where to begin, check out [these issues](https://github.com/getumbrel/llama-gpt/labels/good%20first%20issue) that have specifically been marked as being friendly to new contributors.
 
 ## Acknowledgements
 
