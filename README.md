@@ -67,6 +67,44 @@ To stop LlamaGPT, run:
 docker compose down
 ```
 
+## Benchmarks
+
+We've tested LlamaGPT models on the following hardware with the default system prompt, and user prompt: "How does the universe expand?" at temperature 0 to guarantee deterministic results. Generation speed is averaged over the first 10 generations.
+
+Feel free to add your own benchmarks to this table by opening a pull request.
+
+### Nous Hermes Llama 2 7B (GGML q4_0)
+
+| Device                           | Generation speed |
+| -------------------------------- | ---------------- |
+| M1 Max MacBook Pro (10 64GB RAM) | 8.2 tokens/sec   |
+| Umbrel Home (16GB RAM)           | 2.7 tokens/sec   |
+| Raspberry Pi 4 (8GB RAM)         | 0.9 tokens/sec   |
+
+### Nous Hermes Llama 2 13B (GGML q4_0)
+
+| Device                        | Generation speed |
+| ----------------------------- | ---------------- |
+| M1 Max MacBook Pro (64GB RAM) | 3.7 tokens/sec   |
+| Umbrel Home (16GB RAM)        | 1.5 tokens/sec   |
+
+### Meta Llama 2 70B Chat (GGML q4_0)
+
+Unfortunately, we don't have any benchmarks for this model yet. If you have one, please open a pull request to add it to this table.
+
+## Roadmap and contributing
+
+We're working on adding more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
+
+- Add CUDA and Metal support.
+- Moving the model out of the Docker image and into a separate volume.
+- Updating the front-end to show model download progress, and allow users to switch between models.
+- Making it easy to run custom models.
+
+If you're a developer looking to help but not sure where to begin, check out [these issues](https://github.com/getumbrel/llama-gpt/labels/good%20first%20issue) that have specifically been marked as being friendly to new contributors.
+
+If you're looking for a bigger challenge, before opening a pull request please create an issue to get feedback, discuss the best way to tackle the challenge, and to ensure that there's no duplication of work.
+
 ## Acknowledgements
 
 A massive thank you to the following developers and teams for making LlamaGPT possible:
