@@ -6,6 +6,7 @@ services:
     build:
       context: ./api
       dockerfile: 13B.Dockerfile
+    restart: on-failure
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
 
@@ -13,6 +14,7 @@ services:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
     ports:
       - 3000:3000
+    restart: on-failure
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
