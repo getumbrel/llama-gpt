@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: llama-gpt-api
+  name: llama-gpt-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: llama-gpt-api
+  template:
+    metadata:
+      labels:
+        service: llama-gpt-api
+    spec:
+      containers:
+        - name: llama-gpt-api
+          image: ghcr.io/getumbrel/llama-gpt-api:1.0.1
+          env:
+            - name: MODEL
+              valueFrom: 
+                configMapKeyRef:
+                  name: llama-gpt
+                  key: DEFAULT_MODEL
+          resources:
+            requests:
+              memory: 5Gi
+      restartPolicy: Always
