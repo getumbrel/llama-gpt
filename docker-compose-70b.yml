@@ -15,6 +15,9 @@ services:
       # See: https://github.com/abetlen/llama-cpp-python/issues/528
       # and: https://github.com/facebookresearch/llama/issues/407
       N_GQA: '8'
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'

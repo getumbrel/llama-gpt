@@ -9,6 +9,9 @@ services:
     restart: on-failure
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
