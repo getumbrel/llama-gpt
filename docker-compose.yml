@@ -4,7 +4,7 @@ services:
   llama-gpt-api:
     build:
       context: ./api
-      dockerfile: 13B.Dockerfile
+      dockerfile: Dockerfile
     restart: on-failure
     volumes:
       - ./models:/models
