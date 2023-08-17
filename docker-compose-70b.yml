@@ -7,8 +7,19 @@ services:
       context: ./api
       dockerfile: 70B.Dockerfile
     restart: on-failure
+    volumes:
+      - ./models:/models
     environment:
       MODEL: '/models/llama-2-70b-chat.bin'
+      N_GQA: '8'
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'

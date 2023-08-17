@@ -7,8 +7,11 @@ services:
       context: ./api
       dockerfile: 13B.Dockerfile
     restart: on-failure
+    volumes:
+      - ./models:/models
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
+    privileged: true
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'

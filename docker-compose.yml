@@ -7,6 +7,10 @@ services:
       context: ./api
       dockerfile: Dockerfile
     restart: on-failure
+    volumes:
+      - type: bind
+        source: ./models
+        target: /models
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
 

@@ -1,18 +1,16 @@
 #!/bin/bash
 
-make build
-
 # Get the number of available threads on the system
 n_threads=$(grep -c ^processor /proc/cpuinfo)
 
 # Define context window
 n_ctx=4096
 
-# Offload everything to CPU
-n_gpu_layers=0
+# Offload some to GPU - don't really know how to auto-calculate this
+n_gpu_layers=10
 
 # Define batch size
-n_batch=2096
+n_batch=2048
 # If total RAM is less than 8GB, set batch size to 1024
 total_ram=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
 if [ $total_ram -lt 8000000 ]; then
