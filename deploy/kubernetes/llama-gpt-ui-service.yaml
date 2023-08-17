@@ -11,6 +11,6 @@ spec:
       targetPort: 3000
   selector:
     service: llama-gpt-ui
-  type: LoadBalancer
+  type: ClusterIP
 status:
   loadBalancer: {}
