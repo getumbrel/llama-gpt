@@ -13,8 +13,8 @@ resources:
 configMapGenerator:
 - name: llama-gpt
   literals:
-  - DEFAULT_MODEL=/models/llama-2-7b-chat.bin
-  - OPENAI_API_HOST=http://llama-gpt-api:8000
-  - OPEN_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX
-  - WAIT_HOSTS=llama-gpt-api:8000
+  - DEFAULT_MODEL="/models/llama-2-7b-chat.bin"
+  - OPENAI_API_HOST="http://llama-gpt-api:8000"
+  - OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXX"
+  - WAIT_HOSTS="llama-gpt-api:8000"
   - WAIT_TIMEOUT="600"
