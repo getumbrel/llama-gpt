@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the server start script
-CMD ["/bin/sh", "/app/run.sh", "10"]
+CMD ["/bin/sh", "/app/run.sh", "15"]
