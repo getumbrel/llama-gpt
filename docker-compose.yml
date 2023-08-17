@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  llama-gpt-api:
+  llama-gpt-api-7b:
     # image: ghcr.io/getumbrel/llama-gpt-api
     build:
       context: ./api
@@ -17,7 +17,7 @@ services:
     restart: on-failure
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
-      - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
+      - 'OPENAI_API_HOST=http://llama-gpt-api-7b:8000'
       - 'DEFAULT_MODEL=/models/llama-2-7b-chat.bin'
-      - 'WAIT_HOSTS=llama-gpt-api:8000'
+      - 'WAIT_HOSTS=llama-gpt-api-7b:8000'
       - 'WAIT_TIMEOUT=600'
