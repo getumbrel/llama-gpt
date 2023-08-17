@@ -9,6 +9,12 @@ services:
     restart: on-failure
     environment:
       MODEL: '/models/llama-2-70b-chat.bin'
+      # Llama 2 70B's grouping factor is 8 compared to 7B and 13B's 1. Currently,
+      # it's not possible to change this using --n_gqa with llama-cpp-python in
+      # run.sh, so we expose it as an environment variable.
+      # See: https://github.com/abetlen/llama-cpp-python/issues/528
+      # and: https://github.com/facebookresearch/llama/issues/407
+      N_GQA: '8'
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
