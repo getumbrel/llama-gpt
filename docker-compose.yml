@@ -2,17 +2,22 @@ version: '3.6'
 
 services:
   llama-gpt-api:
-    # image: ghcr.io/getumbrel/llama-gpt-api
     build:
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: 13B.Dockerfile
     restart: on-failure
     volumes:
-      - type: bind
-        source: ./models
-        target: /models
+      - ./models:/models
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
@@ -22,6 +27,6 @@ services:
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
-      - 'DEFAULT_MODEL=/models/llama-2-7b-chat.bin'
+      - 'DEFAULT_MODEL=/models/llama-2-13b-chat.bin'
       - 'WAIT_HOSTS=llama-gpt-api:8000'
       - 'WAIT_TIMEOUT=600'

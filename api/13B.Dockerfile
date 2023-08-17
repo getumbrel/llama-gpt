@@ -1,15 +1,16 @@
 # Define the image argument and provide a default value
-ARG IMAGE=ghcr.io/abetlen/llama-cpp-python:latest
-
-# Define the model file name and download url
-ARG MODEL_FILE=llama-2-13b-chat.bin
-ARG MODEL_DOWNLOAD_URL=https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q4_0.bin
+ARG IMAGE=nvidia/cuda:12.2.0-devel-ubuntu22.04
 
 FROM ${IMAGE}
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Seattle
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip git cmake
+RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python
+RUN pip install numpy diskcache uvicorn fastapi sse-starlette pydantic-settings
+ENV HOST=0.0.0.0
+ENV PORT=8000
 
-ARG MODEL_FILE
-ARG MODEL_DOWNLOAD_URL
-
+# Get llama-cpp-python
 WORKDIR /app
 
 COPY . .
@@ -17,4 +18,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the server start script
-CMD ["/bin/sh", "/app/run.sh"]
+CMD ["/bin/sh", "/app/run.sh", "30"]

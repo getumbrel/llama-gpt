@@ -2,7 +2,6 @@ version: '3.6'
 
 services:
   llama-gpt-api:
-    # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:latest'
     build:
       context: ./api
       dockerfile: 13B.Dockerfile
@@ -12,6 +11,13 @@ services:
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
     privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'

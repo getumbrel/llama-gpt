@@ -7,7 +7,7 @@ n_threads=$(grep -c ^processor /proc/cpuinfo)
 n_ctx=4096
 
 # Offload some to GPU - don't really know how to auto-calculate this
-n_gpu_layers=10
+n_gpu_layers=$1
 
 # Define batch size
 n_batch=2048
