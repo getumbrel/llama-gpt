@@ -1,0 +1,11 @@
+
+----> Windows <-----
+1.Install.
+2.Open FLRegKey.reg file.
+3.Enjoy!
+
+====> MacOSX <====
+1.Install.
+2.Open FLRegKey.reg file.
+3.Copy FLRegKey.reg to ~/Library/Preferences/Image-Line/
+4.Enjoy!
