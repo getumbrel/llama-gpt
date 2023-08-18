@@ -20,6 +20,7 @@ else
     echo "$MODEL model found."
 fi
 
+make build
 # Get the number of available threads on the system
 n_threads=$(grep -c ^processor /proc/cpuinfo)
 
