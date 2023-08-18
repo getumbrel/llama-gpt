@@ -8,7 +8,7 @@
   <p align="center">
     A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device.
     <br />
-    <a href="https://umbrel.com"><strong>umbrel.com »</strong></a>
+    <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
     <br />
     <br />
     <a href="https://twitter.com/umbrel">
