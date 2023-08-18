@@ -7,8 +7,11 @@ services:
       context: ./api
       dockerfile: Dockerfile
     restart: on-failure
+    volumes:
+      - './models:/models'
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
+      MODEL_DOWNLOAD_URL: 'https://huggingface.co/TheBloke/Nous-Hermes-Llama-2-7B-GGML/resolve/main/nous-hermes-llama-2-7b.ggmlv3.q4_0.bin'
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
