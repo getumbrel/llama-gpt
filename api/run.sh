@@ -12,6 +12,14 @@ then
     exit 1
 fi
 
+# check if curl is installed
+
+if ! [ -x "$(command -v curl)" ]; then
+    echo "curl is not installed. Installing..."
+    apt-get update --yes --quiet
+    apt-get install --yes --quiet curl
+fi
+
 
 if [ ! -f $MODEL ]; then
     echo "Model file not found. Downloading..."
