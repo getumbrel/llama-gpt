@@ -1,8 +1,5 @@
 #!/bin/bash
 
-make build
-
-# check if variable is set
 if [ -z "$MODEL" ]
 then
     echo "Please set the MODEL_FILE environment variable"

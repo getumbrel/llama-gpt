@@ -6,7 +6,8 @@ FROM ${IMAGE}
 # Install curl and create a directory for the models
 RUN apt-get update -y && \
     apt-get install --yes curl && \
-    mkdir -p /models
+    mkdir -p /models && \
+    make build
 
 WORKDIR /app
 
