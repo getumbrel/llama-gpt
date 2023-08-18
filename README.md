@@ -36,11 +36,11 @@ https://github.com/getumbrel/llama-gpt/assets/10330103/5d1a76b8-ed03-4a51-90bd-1
 
 Running LlamaGPT on an [umbrelOS](https://umbrel.com) home server is one click. Simply install it from the [Umbrel App Store](https://apps.umbrel.com/app/llama-gpt).
 
-<!-- Todo: update badge link after launch  -->
-
 [![LlamaGPT on Umbrel App Store](https://apps.umbrel.com/app/llama-gpt/badge-light.svg)](https://apps.umbrel.com/app/llama-gpt)
 
-### Install LlamaGPT anywhere else
+---
+
+### Install LlamaGPT anywhere else with Docker
 
 You can run LlamaGPT on any x86 or arm64 system. Make sure you have Docker installed.
 
@@ -66,6 +66,27 @@ To stop LlamaGPT, run:
 ```
 docker compose down
 ```
+
+---
+
+
+### Install LlamaGPT with Kubernetes
+
+First, make sure you have a running Kubernetes cluster and `kubectl` is configured to interact with it.
+
+Then, clone this repo and `cd` into it.
+
+To deploy to Kubernetes first create a namespace:
+```bash
+kubectl create ns llama
+```
+
+Then apply the manifests under the `/deploy/kubernetes` directory with
+```bash
+kubectl apply -k deploy/kubernetes/. -n llama
+```
+
+Expose your service however you would normally do that. 
 
 ## Benchmarks
 
