@@ -5,10 +5,13 @@ services:
     # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-70b-chat:latest'
     build:
       context: ./api
-      dockerfile: 70B.Dockerfile
+      dockerfile: Dockerfile
     restart: on-failure
+    volumes:
+      - './models:/models'
     environment:
       MODEL: '/models/llama-2-70b-chat.bin'
+      MODEL_DOWNLOAD_URL: 'https://huggingface.co/TheBloke/Llama-2-70B-Chat-GGML/resolve/main/llama-2-70b-chat.ggmlv3.q4_0.bin'
       # Llama 2 70B's grouping factor is 8 compared to 7B and 13B's 1. Currently,
       # it's not possible to change this using --n_gqa with llama-cpp-python in
       # run.sh, so we expose it as an environment variable.

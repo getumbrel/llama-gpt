@@ -5,11 +5,14 @@ services:
     # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:latest'
     build:
       context: ./api
-      dockerfile: 13B.Dockerfile
+      dockerfile: Dockerfile
     restart: on-failure
+    volumes:
+      - './models:/models'
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
       USE_MLOCK: 1
+      MODEL_DOWNLOAD_URL: 'https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q4_0.bin'
     cap_add:
       - IPC_LOCK
 
