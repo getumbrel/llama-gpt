@@ -8,7 +8,7 @@
   <p align="center">
     A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device.
     <br />
-    <a href="https://umbrel.com"><strong>umbrel.com »</strong></a>
+    <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
     <br />
     <br />
     <a href="https://twitter.com/umbrel">
@@ -96,8 +96,8 @@ Unfortunately, we don't have any benchmarks for this model yet. If you have one,
 
 We're looking to add more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
 
-- Add CUDA and Metal support.
-- Moving the model out of the Docker image and into a separate volume.
+- Add CUDA and Metal support (work in progress).
+- Moving the model out of the Docker image and into a separate volume (work in progress).
 - Updating the front-end to show model download progress, and to allow users to switch between models.
 - Making it easy to run custom models.
 
