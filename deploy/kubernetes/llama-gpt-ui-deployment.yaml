@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: llama-gpt-ui
+  name: llama-gpt-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: llama-gpt-ui
+  template:
+    metadata:
+      labels:
+        service: llama-gpt-ui
+    spec:
+      containers:
+        - name: llama-gpt-ui
+          image: ghcr.io/getumbrel/llama-gpt-ui:latest
+          envFrom:
+          - configMapRef:
+              name: llama-gpt
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always

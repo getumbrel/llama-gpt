@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- llama-gpt-api-deployment.yaml
+- llama-gpt-api-service.yaml
+- llama-gpt-ui-deployment.yaml
+- llama-gpt-ui-service.yaml
+
+# patches:
+# - 
+
+configMapGenerator:
+- name: llama-gpt
+  literals:
+  - DEFAULT_MODEL="/models/llama-2-7b-chat.bin"
+  - OPENAI_API_HOST="http://llama-gpt-api:8000"
+  - OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXX"
+  - WAIT_HOSTS="llama-gpt-api:8000"
+  - WAIT_TIMEOUT="600"
