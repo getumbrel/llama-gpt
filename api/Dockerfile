@@ -3,7 +3,7 @@ ARG IMAGE=ghcr.io/abetlen/llama-cpp-python:latest
 
 FROM ${IMAGE}
 
-# Download the model file
+# Install curl and create a directory for the models
 RUN apt-get update -y && \
     apt-get install --yes curl && \
     mkdir -p /models
