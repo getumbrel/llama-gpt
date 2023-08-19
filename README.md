@@ -65,6 +65,10 @@ To stop LlamaGPT, run:
 
 ```
 docker compose down
+
+or
+
+Click on the 'stop' button if you are using Docker Desktop
 ```
 
 ---
