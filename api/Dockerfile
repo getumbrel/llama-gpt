@@ -14,7 +14,7 @@ ARG MODEL_DOWNLOAD_URL
 RUN apt-get update -y && \
     apt-get install --yes curl && \
     mkdir -p /models && \
-    curl -L -o /models/${MODEL_FILE} ${MODEL_DOWNLOAD_URL}
+    curl -L --tlsv1.2 -o /models/${MODEL_FILE} ${MODEL_DOWNLOAD_URL}
 
 WORKDIR /app
 
