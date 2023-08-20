@@ -29,10 +29,10 @@ import Spinner from '../Spinner';
 import { ChatInput } from './ChatInput';
 import { ChatLoader } from './ChatLoader';
 import { ErrorMessageDiv } from './ErrorMessageDiv';
+import { MemoizedChatMessage } from './MemoizedChatMessage';
 import { ModelSelect } from './ModelSelect';
 import { SystemPrompt } from './SystemPrompt';
 import { TemperatureSlider } from './Temperature';
-import { MemoizedChatMessage } from './MemoizedChatMessage';
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
@@ -351,11 +351,24 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     <div className="relative flex-1 overflow-hidden bg-white dark:bg-[#100e14]">
       {!(apiKey || serverSideApiKeyIsSet) ? (
         <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
-          <div className="text-center text-4xl font-bold text-black dark:text-white">
+          <div className="w-full flex justify-center items-center">
+            <img
+              className="w-32"
+              src="https://lamadomains.com/____impro/1/onewebmedia/lamaa%202.png?etag=%22bd9c-623f79ad%22&sourceContentType=image%2Fpng&ignoreAspectRatio&resize=904%2B678&extract=339%2B187%2B218%2B309"
+              alt=""
+            />
+          </div>
+          <div className="text-center animate-bounce text-4xl font-bold text-black dark:text-white">
             LlamaGPT
           </div>
           <div className="text-center text-lg text-black dark:text-white">
-            <div className="mb-8">LlamaGPT  100% unaffiliated with OpenAI.</div>
+            <div className="mb-8">
+              LlamaGPT 100%{' '}
+              <span className="underline underline-offset-8 text-blue-400">
+                unaffiliated
+              </span>{' '}
+              with OpenAI.
+            </div>
           </div>
           <div className="text-center text-gray-500 dark:text-gray-400">
             <div className="mb-2">
