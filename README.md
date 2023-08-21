@@ -104,7 +104,7 @@ We've tested LlamaGPT models on the following hardware with the default system p
 
 Feel free to add your own benchmarks to this table by opening a pull request.
 
-### Nous Hermes Llama 2 7B (GGML q4_0)
+#### Nous Hermes Llama 2 7B (GGML q4_0)
 
 | Device                           | Generation speed |
 | -------------------------------- | ---------------- |
@@ -112,14 +112,14 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Umbrel Home (16GB RAM)           | 2.7 tokens/sec   |
 | Raspberry Pi 4 (8GB RAM)         | 0.9 tokens/sec   |
 
-### Nous Hermes Llama 2 13B (GGML q4_0)
+#### Nous Hermes Llama 2 13B (GGML q4_0)
 
 | Device                        | Generation speed |
 | ----------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM) | 3.7 tokens/sec   |
 | Umbrel Home (16GB RAM)        | 1.5 tokens/sec   |
 
-### Meta Llama 2 70B Chat (GGML q4_0)
+#### Meta Llama 2 70B Chat (GGML q4_0)
 
 | Device                              | Generation speed |
 | ----------------------------------- | ---------------- |
