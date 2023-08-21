@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  llama-gpt-ui-mac:
+    build:
+      context: ./ui
+      dockerfile: no-wait.Dockerfile
+    ports:
+      - 3000:3000
+    restart: on-failure
+    environment:
+      - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
+      - 'OPENAI_API_HOST=http://host.docker.internal:3001'
+      - 'DEFAULT_MODEL=$MODEL'

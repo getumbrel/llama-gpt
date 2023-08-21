@@ -40,7 +40,28 @@ Running LlamaGPT on an [umbrelOS](https://umbrel.com) home server is one click. 
 
 ---
 
-### Install LlamaGPT anywhere else with Docker
+### Install LlamaGPT on M1/M2 Mac
+
+Make sure your have Docker and Xcode installed.
+
+Then, clone this repo and `cd` into it:
+
+```
+git clone https://github.com/getumbrel/llama-gpt.git
+cd llama-gpt
+```
+
+Run LlamaGPT with the following command:
+
+```
+./run-mac.sh --model 7b
+```
+
+To run 13B or 70B models, replace `7b` with `13b` or `70b` respectively.
+
+To stop LlamaGPT, do `Ctrl + C` in Terminal.
+
+### Install LlamaGPT anywhere else with Docker (CPU only)
 
 You can run LlamaGPT on any x86 or arm64 system. Make sure you have Docker installed.
 
@@ -113,32 +134,36 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 
 #### Nous Hermes Llama 2 7B (GGML q4_0)
 
-| Device                           | Generation speed |
-| -------------------------------- | ---------------- |
-| M1 Max MacBook Pro (10 64GB RAM) | 8.2 tokens/sec   |
-| Umbrel Home (16GB RAM)           | 2.7 tokens/sec   |
-| Raspberry Pi 4 (8GB RAM)         | 0.9 tokens/sec   |
+| Device                                            | Generation speed |
+| ------------------------------------------------- | ---------------- |
+| M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 54 tokens/sec    |
+| M1 Max MacBook Pro (64GB RAM) with Docker         | 8.2 tokens/sec   |
+| Umbrel Home (16GB RAM)                            | 2.7 tokens/sec   |
+| Raspberry Pi 4 (8GB RAM)                          | 0.9 tokens/sec   |
 
 #### Nous Hermes Llama 2 13B (GGML q4_0)
 
-| Device                        | Generation speed |
-| ----------------------------- | ---------------- |
-| M1 Max MacBook Pro (64GB RAM) | 3.7 tokens/sec   |
-| Umbrel Home (16GB RAM)        | 1.5 tokens/sec   |
+| Device                                            | Generation speed |
+| ------------------------------------------------- | ---------------- |
+| M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 20 tokens/sec    |
+| M1 Max MacBook Pro (64GB RAM) with Docker         | 3.7 tokens/sec   |
+| Umbrel Home (16GB RAM)                            | 1.5 tokens/sec   |
 
 #### Meta Llama 2 70B Chat (GGML q4_0)
 
-| Device                              | Generation speed |
-| ----------------------------------- | ---------------- |
-| M2 Max MacBook Pro (96GB RAM)       | 0.69 tokens/sec  |
-| GCP e2-standard-16 vCPU (64 GB RAM) | 1.75 tokens/sec  |
+| Device                                            | Generation speed |
+| ------------------------------------------------- | ---------------- |
+| M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 4.8 tokens/sec   |
+| GCP e2-standard-16 vCPU (64 GB RAM)               | 1.75 tokens/sec  |
+| M2 Max MacBook Pro (96GB RAM) with Docker         | 0.69 tokens/sec  |
 
 ## Roadmap and contributing
 
 We're looking to add more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
 
 - [x] Moving the model out of the Docker image and into a separate volume.
-- [ ] Add CUDA and Metal support (work in progress).
+- [x] Add Metal support for M1/M2 Macs.
+- [ ] Add CUDA support for NVIDIA GPUs (work in progress).
 - [ ] Add ability to load custom models.
 - [ ] Allow users to switch between models.
 - [ ] Making it easy to run custom models.
