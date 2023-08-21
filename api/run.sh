@@ -25,6 +25,10 @@
      fi
      # Download the model file
      curl -L -o $MODEL $MODEL_DOWNLOAD_URL
+     if [ $? -ne 0 ]; then
+         echo "Download failed. Trying with TLS 1.2..."
+         curl -L --tlsv1.2 -o $MODEL $MODEL_DOWNLOAD_URL
+     fi
  else
      echo "$MODEL model found."
  fi
