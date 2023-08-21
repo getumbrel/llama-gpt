@@ -162,7 +162,8 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 We're looking to add more features to LlamaGPT. You can see the roadmap [here](https://github.com/getumbrel/llama-gpt/issues/8#issuecomment-1681321145). The highest priorities are:
 
 - [x] Moving the model out of the Docker image and into a separate volume.
-- [ ] Add CUDA and Metal support (work in progress).
+- [x] Add Metal support for M1/M2 Macs.
+- [ ] Add CUDA support for NVIDIA GPUs (work in progress).
 - [ ] Add ability to load custom models.
 - [ ] Allow users to switch between models.
 - [ ] Making it easy to run custom models.
