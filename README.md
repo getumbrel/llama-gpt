@@ -26,6 +26,18 @@
   </p>
 </p>
 
+## Table of Contents
+1. [Demo](#demo)
+2. [How to install](#how-to-install)
+   - [On umbrelOS home server](#install-llamagpt-on-your-umbrelos-home-server)
+   - [On M1/M2 Mac](#install-llamagpt-on-m1m2-mac)
+   - [Anywhere else with Docker (CPU only)](#install-llamagpt-anywhere-else-with-docker-cpu-only)
+   - [Kubernetes](#install-llamagpt-with-kubernetes)
+3. [OpenAI-compatible API](#openai-compatible-api)
+4. [Benchmarks](#benchmarks)
+5. [Roadmap and contributing](#roadmap-and-contributing)
+6. [Acknowledgements](#acknowledgements)
+
 ## Demo
 
 https://github.com/getumbrel/llama-gpt/assets/10330103/5d1a76b8-ed03-4a51-90bd-12ebfaf1e6cd
