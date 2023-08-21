@@ -82,8 +82,8 @@ else
 fi
 
 # Check if llama-cpp-python is already installed
-llama_cpp_python_installed=$(pip3 show llama-cpp-python)
-if [[ -z "$llama_cpp_python_installed" ]]; then
+llama_cpp_python_installed=$(pip3 list | grep -q llama-cpp-python && echo "installed" || echo "not installed")
+if [[ "$llama_cpp_python_installed" == "not installed" ]]; then
     echo "llama-cpp-python is not installed. Installing..."
     CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip3 install -U llama-cpp-python --no-cache-dir
     pip3 install 'llama-cpp-python[server]'
