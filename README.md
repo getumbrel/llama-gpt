@@ -27,7 +27,7 @@
 </p>
 <p align="center">
   <a href="https://umbrel.com/#start">
-    <img src="https://i.imgur.com/wUTwgoe.jpg" width="100%" />
+    <img src="https://i.imgur.com/sj5vqEG.jpg" width="100%" />
   </a>
 </p>
 
