@@ -7,6 +7,8 @@ services:
     volumes:
       - './models:/models'
       - './api:/api'
+    ports:
+      - 3001:8000
     environment:
       MODEL: '/models/llama-2-70b-chat.bin'
       MODEL_DOWNLOAD_URL: 'https://huggingface.co/TheBloke/Llama-2-70B-Chat-GGML/resolve/main/llama-2-70b-chat.ggmlv3.q4_0.bin'

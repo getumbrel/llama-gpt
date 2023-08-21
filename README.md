@@ -53,18 +53,20 @@ cd llama-gpt
 
 You can now run LlamaGPT with any of the following models depending upon your hardware:
 
-| Model size | Model used                          | Minimum RAM required | How to start LlamaGPT                            |
-| ---------- | ----------------------------------- | -------------------- | ------------------------------------------------ |
+| Model size | Model used                          | Minimum RAM required | How to start LlamaGPT                         |
+| ---------- | ----------------------------------- | -------------------- | --------------------------------------------- |
 | 7B         | Nous Hermes Llama 2 7B (GGML q4_0)  | 8GB                  | `docker compose up`                           |
 | 13B        | Nous Hermes Llama 2 13B (GGML q4_0) | 16GB                 | `docker compose -f docker-compose-13b.yml up` |
 | 70B        | Meta Llama 2 70B Chat (GGML q4_0)   | 48GB                 | `docker compose -f docker-compose-70b.yml up` |
 
 Note: On the first run, it may take a while for the model to be downloaded to the `/models` directory. You may see lots of output like for a few minutes, which is normal:
+
 ```
 llama-gpt-llama-gpt-ui-1       | [INFO  wait] Host [llama-gpt-api-13b:8000] not yet available...
 ```
 
 After the model has been downloaded and loaded, and the API server is running, you'll see an output like:
+
 ```
 llama-gpt-llama-gpt-api-13b-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
@@ -79,7 +81,6 @@ docker compose down
 
 ---
 
-
 ### Install LlamaGPT with Kubernetes
 
 First, make sure you have a running Kubernetes cluster and `kubectl` is configured to interact with it.
@@ -87,16 +88,22 @@ First, make sure you have a running Kubernetes cluster and `kubectl` is configur
 Then, clone this repo and `cd` into it.
 
 To deploy to Kubernetes first create a namespace:
+
 ```bash
 kubectl create ns llama
 ```
 
 Then apply the manifests under the `/deploy/kubernetes` directory with
+
 ```bash
 kubectl apply -k deploy/kubernetes/. -n llama
 ```
 
-Expose your service however you would normally do that. 
+Expose your service however you would normally do that.
+
+## OpenAI compatible API
+
+Thanks to llama-cpp-python, a drop-in replacement for OpenAI API is available at `http://localhost:3001`. Open http://localhost:3001/docs to see the API documentation.
 
 ## Benchmarks
 

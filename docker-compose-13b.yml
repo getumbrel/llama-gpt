@@ -7,6 +7,8 @@ services:
     volumes:
       - './models:/models'
       - './api:/api'
+    ports:
+      - 3001:8000
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
       USE_MLOCK: 1
