@@ -2,16 +2,18 @@ version: '3.6'
 
 services:
   llama-gpt-api-13b:
-    # image: 'ghcr.io/getumbrel/llama-gpt-api-llama-2-13b-chat:latest'
-    build:
-      context: ./api
-      dockerfile: 13B.Dockerfile
+    image: ghcr.io/abetlen/llama-cpp-python:latest
     restart: on-failure
+    volumes:
+      - './models:/models'
+      - './api:/api'
     environment:
       MODEL: '/models/llama-2-13b-chat.bin'
       USE_MLOCK: 1
+      MODEL_DOWNLOAD_URL: 'https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q4_0.bin'
     cap_add:
       - IPC_LOCK
+    command: '/bin/sh /api/run.sh'
 
   llama-gpt-ui:
     image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
