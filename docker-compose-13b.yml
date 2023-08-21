@@ -25,4 +25,4 @@ services:
       - 'OPENAI_API_HOST=http://llama-gpt-api-13b:8000'
       - 'DEFAULT_MODEL=/models/llama-2-13b-chat.bin'
       - 'WAIT_HOSTS=llama-gpt-api-13b:8000'
-      - 'WAIT_TIMEOUT=600'
+      - 'WAIT_TIMEOUT=10800'
