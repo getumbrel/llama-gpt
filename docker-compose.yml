@@ -10,6 +10,7 @@ services:
       - ./models:/models
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
+      GPU_LAYERS: 100
     privileged: true
     deploy:
       resources:
@@ -27,6 +28,6 @@ services:
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
-      - 'DEFAULT_MODEL=/models/llama-2-13b-chat.bin'
+      - 'DEFAULT_MODEL=/models/llama-2-7b-chat.bin'
       - 'WAIT_HOSTS=llama-gpt-api:8000'
       - 'WAIT_TIMEOUT=600'

@@ -4,12 +4,13 @@ services:
   llama-gpt-api:
     build:
       context: ./api
-      dockerfile: 13B.Dockerfile
+      dockerfile: Dockerfile
     restart: on-failure
     volumes:
       - ./models:/models
     environment:
-      MODEL: '/models/llama-2-13b-chat.bin'
+      MODEL: '/models/nous-hermes-llama2-13b.ggmlv3.q2_K.bin'
+      GPU_LAYERS: 45
     privileged: true
     deploy:
       resources:
