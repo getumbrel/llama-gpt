@@ -59,12 +59,12 @@ You can now run LlamaGPT with any of the following models depending upon your ha
 | 13B        | Nous Hermes Llama 2 13B (GGML q4_0) | 16GB                 | `docker compose -f docker-compose-13b.yml up` |
 | 70B        | Meta Llama 2 70B Chat (GGML q4_0)   | 48GB                 | `docker compose -f docker-compose-70b.yml up` |
 
-Note: On the first run, it may take a while for the model to be downloaded to the `/models` directory. You may see lots of output like, which is normal:
+Note: On the first run, it may take a while for the model to be downloaded to the `/models` directory. You may see lots of output like for a few minutes, which is normal:
 ```
 llama-gpt-llama-gpt-ui-1       | [INFO  wait] Host [llama-gpt-api-13b:8000] not yet available...
 ```
 
-After the model has been downloaded, and the API server is running, you'll see an output like:
+After the model has been downloaded and loaded, and the API server is running, you'll see an output like:
 ```
 llama-gpt-llama-gpt-api-13b-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
