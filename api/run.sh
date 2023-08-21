@@ -1,5 +1,32 @@
 #!/bin/bash
 
+if [ -z "$MODEL" ]
+then
+    echo "Please set the MODEL_FILE environment variable"
+    exit 1
+fi
+
+if [ -z "$MODEL_DOWNLOAD_URL" ]
+then
+    echo "Please set the MODEL_DOWNLOAD_URL environment variable"
+    exit 1
+fi
+
+# check if curl is installed
+if ! [ -x "$(command -v curl)" ]; then
+    echo "curl is not installed. Installing..."
+    apt-get update --yes --quiet
+    apt-get install --yes --quiet curl
+fi
+
+
+if [ ! -f $MODEL ]; then
+    echo "Model file not found. Downloading..."
+    curl -L -o $MODEL $MODEL_DOWNLOAD_URL
+else
+    echo "$MODEL model found."
+fi
+
 # Build the project
 make build
 

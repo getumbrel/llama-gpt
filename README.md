@@ -55,13 +55,23 @@ You can now run LlamaGPT with any of the following models depending upon your ha
 
 | Model size | Model used                          | Minimum RAM required | How to start LlamaGPT                            |
 | ---------- | ----------------------------------- | -------------------- | ------------------------------------------------ |
-| 7B         | Nous Hermes Llama 2 7B (GGML q4_0)  | 8GB                  | `docker compose up -d`                           |
-| 13B        | Nous Hermes Llama 2 13B (GGML q4_0) | 16GB                 | `docker compose -f docker-compose-13b.yml up -d` |
-| 70B        | Meta Llama 2 70B Chat (GGML q4_0)   | 48GB                 | `docker compose -f docker-compose-70b.yml up -d` |
+| 7B         | Nous Hermes Llama 2 7B (GGML q4_0)  | 8GB                  | `docker compose up`                           |
+| 13B        | Nous Hermes Llama 2 13B (GGML q4_0) | 16GB                 | `docker compose -f docker-compose-13b.yml up` |
+| 70B        | Meta Llama 2 70B Chat (GGML q4_0)   | 48GB                 | `docker compose -f docker-compose-70b.yml up` |
 
-You can access LlamaGPT at `http://localhost:3000`.
+Note: On the first run, it may take a while for the model to be downloaded to the `/models` directory. You may see lots of output like, which is normal:
+```
+llama-gpt-llama-gpt-ui-1       | [INFO  wait] Host [llama-gpt-api-13b:8000] not yet available...
+```
 
-To stop LlamaGPT, run:
+After the model has been downloaded, and the API server is running, you'll see an output like:
+```
+llama-gpt-llama-gpt-api-13b-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+```
+
+You can then access LlamaGPT at `http://localhost:3000`.
+
+To stop LlamaGPT, either do `Ctrl + C` or run:
 
 ```
 docker compose down
@@ -111,7 +121,10 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 
 ### Meta Llama 2 70B Chat (GGML q4_0)
 
-Unfortunately, we don't have any benchmarks for this model yet. If you have one, please open a pull request to add it to this table.
+| Device                              | Generation speed |
+| ----------------------------------- | ---------------- |
+| M2 Max MacBook Pro (96GB RAM)       | 0.69 tokens/sec  |
+| GCP e2-standard-16 vCPU (64 GB RAM) | 1.75 tokens/sec  |
 
 ## Roadmap and contributing
 
