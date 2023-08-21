@@ -26,7 +26,9 @@
   </p>
 </p>
 
-## Table of Contents
+[![Install LlamaGPT and 100s of self-hosted apps on umbrelOS](https://github.com/getumbrel/llama-gpt/assets/10330103/00583f71-be2b-4773-bd2c-058b4b6e59fe)](https://umbrel.com/#start)
+
+## Contents
 1. [Demo](#demo)
 2. [How to install](#how-to-install)
    - [On umbrelOS home server](#install-llamagpt-on-your-umbrelos-home-server)
