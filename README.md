@@ -111,10 +111,10 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 
 ### Meta Llama 2 70B Chat (GGML q4_0)
 
-| Device                        | Generation speed |
-| ----------------------------- | ---------------- |
-| M2 Max MacBook Pro (96GB RAM) | 0.69 tokens/sec  |
-
+| Device                              | Generation speed |
+| ----------------------------------- | ---------------- |
+| M2 Max MacBook Pro (96GB RAM)       | 0.69 tokens/sec  |
+| GCP e2-standard-16 vCPU (64 GB RAM) | 1.75 tokens/sec  |
 
 ## Roadmap and contributing
 
