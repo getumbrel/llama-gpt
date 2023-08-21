@@ -26,7 +26,11 @@
   </p>
 </p>
 
-[![Install LlamaGPT and 100s of self-hosted apps on umbrelOS](https://github.com/getumbrel/llama-gpt/assets/10330103/00583f71-be2b-4773-bd2c-058b4b6e59fe)](https://umbrel.com/#start)
+<p align="center">
+  <a href="https://umbrel.com/#start">
+    <img src="https://github.com/getumbrel/llama-gpt/assets/10330103/00583f71-be2b-4773-bd2c-058b4b6e59fe" alt="Install LlamaGPT and 100s of   self-hosted apps on umbrelOS" style="max-width: 100%;">
+  </a>
+</p>
 
 ## Contents
 1. [Demo](#demo)
