@@ -12,7 +12,9 @@ services:
       MODEL: '/models/llama-2-70b-chat.bin'
       N_GQA: '8'
       GPU_LAYERS: 50
-    privileged: true
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
     deploy:
       resources:
         reservations:

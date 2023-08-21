@@ -11,7 +11,9 @@ services:
     environment:
       MODEL: '/models/llama-2-7b-chat.bin'
       GPU_LAYERS: 100
-    privileged: true
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
     deploy:
       resources:
         reservations:

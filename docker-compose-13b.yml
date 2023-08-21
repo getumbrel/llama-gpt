@@ -11,7 +11,9 @@ services:
     environment:
       MODEL: '/models/nous-hermes-llama2-13b.ggmlv3.q2_K.bin'
       GPU_LAYERS: 45
-    privileged: true
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
     deploy:
       resources:
         reservations:
