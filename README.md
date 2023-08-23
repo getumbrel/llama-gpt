@@ -174,7 +174,9 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 54 tokens/sec    |
+| GCP c2-standard-16 vCPU (64 GB RAM)               | 16.7 tokens/sec  |
 | M1 Max MacBook Pro (64GB RAM) with Docker         | 8.2 tokens/sec   |
+| GCP c2-standard-4 vCPU (16 GB RAM)                | 4.3 tokens/sec   |
 | Umbrel Home (16GB RAM)                            | 2.7 tokens/sec   |
 | Raspberry Pi 4 (8GB RAM)                          | 0.9 tokens/sec   |
 
@@ -183,7 +185,9 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 20 tokens/sec    |
+| GCP c2-standard-16 vCPU (64 GB RAM)               | 8.6 tokens/sec   |
 | M1 Max MacBook Pro (64GB RAM) with Docker         | 3.7 tokens/sec   |
+| GCP c2-standard-4 vCPU (16 GB RAM)                | 2.2 tokens/sec   |
 | Umbrel Home (16GB RAM)                            | 1.5 tokens/sec   |
 
 #### Meta Llama 2 70B Chat (GGML q4_0)
@@ -191,7 +195,7 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 4.8 tokens/sec   |
-| GCP e2-standard-16 vCPU (64 GB RAM)               | 1.75 tokens/sec  |
+| GCP e2-standard-16 vCPU (64 GB RAM)               | 1.68 tokens/sec  |
 | M2 Max MacBook Pro (96GB RAM) with Docker         | 0.69 tokens/sec  |
 
 ## Roadmap and contributing
