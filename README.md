@@ -195,7 +195,8 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM) with `./run-mac.sh` | 4.8 tokens/sec   |
-| GCP e2-standard-16 vCPU (64 GB RAM)               | 1.68 tokens/sec  |
+| GCP e2-standard-16 vCPU (64 GB RAM)               | 1.75 tokens/sec  |
+| GCP c2-standard-16 vCPU (64 GB RAM)               | 1.62 tokens/sec  |
 | M2 Max MacBook Pro (96GB RAM) with Docker         | 0.69 tokens/sec  |
 
 ## Roadmap and contributing
