@@ -139,6 +139,22 @@ docker compose down
 
 ---
 
+> Note: If on your first, run, when you type `docker compose up` instead of properly running you see:
+> 
+> ```
+> unknown shorthand flag: 'f' in -f
+> See 'docker --help'
+> ```
+> 
+> It is possible you have [Docker Compose Standalone ](https://docs.docker.com/compose/install/standalone/) installed,
+> in which case you need to instead do:
+> 
+> ```
+> docker-compose up
+> ```
+> 
+> (note the added dash/minus character between docker and compose).
+
 ### Install LlamaGPT with Kubernetes
 
 First, make sure you have a running Kubernetes cluster and `kubectl` is configured to interact with it.
