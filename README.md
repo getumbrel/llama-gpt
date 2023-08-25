@@ -57,7 +57,7 @@ Currently, LlamaGPT supports the following models. Support for running custom mo
 | ---------------------------------------- | ---------- | ------------------- | ------------ |
 | Nous Hermes Llama 2 7B Chat (GGML q4_0)  | 7B         | 3.79GB              | 6.29GB       |
 | Nous Hermes Llama 2 13B Chat (GGML q4_0) | 13B        | 7.32GB              | 9.82GB       |
-| Meta Llama 2 70B Chat (GGML q4_0)        | 70B        | 38.87GB             | 41.37GB      |
+| Nous Hermes Llama 2 70B Chat (GGML q4_0) | 70B        | 38.87GB             | 41.37GB      |
 
 ## How to install
 
@@ -122,13 +122,13 @@ docker compose -f docker-compose-70b.yml up
 > ```
 > llama-gpt-llama-gpt-ui-1       | [INFO  wait] Host [llama-gpt-api-13b:8000] not yet available...
 > ```
-> 
+>
 > After the model has been downloaded and loaded, and the API server is running, you'll see an output like:
-> 
+>
 > ```
 > llama-gpt-llama-gpt-api-13b-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 > ```
-> 
+>
 > You can then access LlamaGPT at `http://localhost:3000`.
 
 To stop LlamaGPT, either do `Ctrl + C` or run:
@@ -169,7 +169,7 @@ We've tested LlamaGPT models on the following hardware with the default system p
 
 Feel free to add your own benchmarks to this table by opening a pull request.
 
-#### Nous Hermes Llama 2 7B (GGML q4_0)
+#### Nous Hermes Llama 2 7B Chat (GGML q4_0)
 
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
@@ -180,7 +180,7 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | Umbrel Home (16GB RAM)                            | 2.7 tokens/sec   |
 | Raspberry Pi 4 (8GB RAM)                          | 0.9 tokens/sec   |
 
-#### Nous Hermes Llama 2 13B (GGML q4_0)
+#### Nous Hermes Llama 2 13B Chat (GGML q4_0)
 
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
@@ -190,7 +190,7 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | GCP c2-standard-4 vCPU (16 GB RAM)                | 2.2 tokens/sec   |
 | Umbrel Home (16GB RAM)                            | 1.5 tokens/sec   |
 
-#### Meta Llama 2 70B Chat (GGML q4_0)
+#### Nous Hermes Llama 2 70B Chat (GGML q4_0)
 
 | Device                                            | Generation speed |
 | ------------------------------------------------- | ---------------- |
