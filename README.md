@@ -6,7 +6,7 @@
 <p align="center">
   <h1 align="center">LlamaGPT</h1>
   <p align="center">
-    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device.
+    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device. Code Llama support coming soon.
     <br />
     <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
     <br />
@@ -205,6 +205,7 @@ We're looking to add more features to LlamaGPT. You can see the roadmap [here](h
 
 - [x] Moving the model out of the Docker image and into a separate volume.
 - [x] Add Metal support for M1/M2 Macs.
+- [ ] Add support for Code Llama models.
 - [ ] Add CUDA support for NVIDIA GPUs (work in progress).
 - [ ] Add ability to load custom models.
 - [ ] Allow users to switch between models.
