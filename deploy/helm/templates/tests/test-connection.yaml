@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['llama-gpt-ui:{{ .Values.ui.service.port }}']
+      args: ['{{ template "llamagpt.fullname" . }}-ui:{{ .Values.ui.service.port }}']
   restartPolicy: Never

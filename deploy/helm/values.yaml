@@ -14,9 +14,10 @@ ui:
     tag: 1.0.1
     pullPolicy: IfNotPresent
   affinity: {}
+  restartPolicy: Always
 
 api:
-  defaultmodel: /models/llama-2-7b-chat.bin
+  defaultModel: /models/llama-2-7b-chat.bin
   replicaCount: 1
   service:
     type: ClusterIP
@@ -27,3 +28,6 @@ api:
     tag: 1.0.1
     pullPolicy: IfNotPresent
   affinity: {}
+  restartPolicy: Always
+  resources:
+    memory: 5Gi

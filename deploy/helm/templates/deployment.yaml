@@ -4,31 +4,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: llama-gpt-api
-  name: llama-gpt-api
+    service: {{ template "llamagpt.fullname" . }}-api
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-api
 spec:
   replicas: {{ .Values.api.replicas }}
   selector:
     matchLabels:
-      service: llama-gpt-api
+      service: {{ template "llamagpt.fullname" . }}-api
   template:
     metadata:
       labels:
-        service: llama-gpt-api
+        service: {{ template "llamagpt.fullname" . }}-api
+        {{- include "llamagpt.labels" . | nindent 4 }}
     spec:
       containers:
-        - name: llama-gpt-api
+        - name: {{ template "llamagpt.fullname" . }}-api
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
           env:
             - name: MODEL
               valueFrom:
                 configMapKeyRef:
-                  name: llama-gpt-configmap
+                  name: {{ template "llamagpt.fullname" . }}-configmap
                   key: DEFAULT_MODEL
           resources:
             requests:
-              memory: 5Gi
-      restartPolicy: Always
+              memory: {{ .Values.api.resources.memory }}
+      restartPolicy: {{ .Values.api.restartPolicy }}
 
 ---
 
@@ -36,27 +38,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: llama-gpt-ui
-  name: llama-gpt-ui
+    service: {{ template "llamagpt.fullname" . }}-ui
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-ui
 spec:
   replicas: {{ .Values.ui.replicas }}
   selector:
     matchLabels:
-      service: llama-gpt-ui
+      service:  {{ template "llamagpt.fullname" . }}-ui
   template:
     metadata:
       labels:
-        service: llama-gpt-ui
+        service:  {{ template "llamagpt.fullname" . }}-ui
+        {{- include "llamagpt.labels" . | nindent 4 }}
     spec:
       containers:
-        - name: llama-gpt-ui
+        - name:  {{ template "llamagpt.fullname" . }}-ui
           image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
           envFrom:
           - configMapRef:
-              name: llama-gpt-configmap
+              name:  {{ template "llamagpt.fullname" . }}-configmap
           ports:
             - containerPort: {{ int .Values.ui.service.internalPort }}
           resources: {}
-      restartPolicy: Always
+      restartPolicy: {{ .Values.ui.restartPolicy }}
 
 ---

@@ -4,15 +4,16 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: llama-gpt-api
-  name: llama-gpt-api
+    service: {{ template "llamagpt.fullname" . }}
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-api
 spec:
   ports:
     - name: api
       port: {{ .Values.api.service.port }}
       targetPort: {{ .Values.api.service.targetPort }}
   selector:
-    service: llama-gpt-api
+    service: {{ template "llamagpt.fullname" . }}-api
 status:
   loadBalancer: {}
 
@@ -22,15 +23,16 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: llama-gpt-ui
-  name: llama-gpt-ui
+    service: {{ template "llamagpt.fullname" . }}-ui
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-ui
 spec:
   ports:
     - name: ui
       port: {{ .Values.ui.service.port }}
       targetPort: {{ .Values.ui.service.targetPort }}
   selector:
-    service: llama-gpt-ui
+    service: {{ template "llamagpt.fullname" . }}-ui
   type: {{ .Values.ui.service.type }}
 status:
   loadBalancer: {}
