@@ -6,7 +6,10 @@
 <p align="center">
   <h1 align="center">LlamaGPT</h1>
   <p align="center">
-    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device. New: Code Llama support!
+    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device.
+    <br/>
+    <strong>New: Support for Code Llama models, and support for Nvidia GPUs.</strong>
+    <br />
     <br />
     <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
     <br />
@@ -38,7 +41,7 @@
 3. [How to install](#how-to-install)
    - [On umbrelOS home server](#install-llamagpt-on-your-umbrelos-home-server)
    - [On M1/M2 Mac](#install-llamagpt-on-m1m2-mac)
-   - [Anywhere else with Docker (CPU only or with CUDA)](#install-llamagpt-anywhere-else-with-docker-cpu-only)
+   - [Anywhere else with Docker](#install-llamagpt-anywhere-else-with-docker)
    - [Kubernetes](#install-llamagpt-with-kubernetes)
 4. [OpenAI-compatible API](#openai-compatible-api)
 5. [Benchmarks](#benchmarks)
@@ -111,7 +114,7 @@ Run LlamaGPT with the following command:
 ./run.sh --model 7b
 ```
 
-Or if you have an NVIDIA GPU, you can run LlamaGPT with CUDA support for faster interference with:
+Or if you have an Nvidia GPU, you can run LlamaGPT with CUDA support using the `--with-model` flag, like:
 
 ```
 ./run.sh --model 7b --with-cuda
