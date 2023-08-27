@@ -1,6 +1,7 @@
 apiVersion: v2
 name: llamagpt
 description: A Helm chart for Kubernetes
+icon: https://i.imgur.com/LI59cui.png
 
 # A chart can be either an 'application' or a 'library' chart.
 #
