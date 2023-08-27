@@ -1,0 +1,62 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: llama-gpt-api
+  name: llama-gpt-api
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      service: llama-gpt-api
+  template:
+    metadata:
+      labels:
+        service: llama-gpt-api
+    spec:
+      containers:
+        - name: llama-gpt-api
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          env:
+            - name: MODEL
+              valueFrom:
+                configMapKeyRef:
+                  name: llama-gpt-configmap
+                  key: DEFAULT_MODEL
+          resources:
+            requests:
+              memory: 5Gi
+      restartPolicy: Always
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: llama-gpt-ui
+  name: llama-gpt-ui
+spec:
+  replicas: {{ .Values.ui.replicas }}
+  selector:
+    matchLabels:
+      service: llama-gpt-ui
+  template:
+    metadata:
+      labels:
+        service: llama-gpt-ui
+    spec:
+      containers:
+        - name: llama-gpt-ui
+          image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
+          envFrom:
+          - configMapRef:
+              name: llama-gpt-configmap
+          ports:
+            - containerPort: {{ int .Values.ui.service.internalPort }}
+          resources: {}
+      restartPolicy: Always
+
+---

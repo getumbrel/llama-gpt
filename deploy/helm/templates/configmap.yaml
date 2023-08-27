@@ -1,0 +1,14 @@
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: llama-gpt-configmap
+data:
+  DEFAULT_MODEL: {{ .Values.api.defaultmodel }}
+  OPENAI_API_HOST: http://llama-gpt-api:{{ .Values.api.service.port }}
+  OPENAI_API_KEY: sk-XXXXXXXXXXXXXXXXXXXX
+  WAIT_HOSTS: llama-gpt-api:{{ .Values.api.service.port }}
+  WAIT_TIMEOUT: "600"
+
+---
