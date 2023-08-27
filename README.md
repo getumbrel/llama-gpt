@@ -38,7 +38,7 @@
 3. [How to install](#how-to-install)
    - [On umbrelOS home server](#install-llamagpt-on-your-umbrelos-home-server)
    - [On M1/M2 Mac](#install-llamagpt-on-m1m2-mac)
-   - [Anywhere else with Docker (CPU only)](#install-llamagpt-anywhere-else-with-docker-cpu-only)
+   - [Anywhere else with Docker (CPU only or with CUDA)](#install-llamagpt-anywhere-else-with-docker-cpu-only)
    - [Kubernetes](#install-llamagpt-with-kubernetes)
 4. [OpenAI-compatible API](#openai-compatible-api)
 5. [Benchmarks](#benchmarks)
@@ -94,7 +94,7 @@ To run 7B, 13B or 34B Code Llama models, replace `7b` with `code-7b`, `code-13b`
 
 To stop LlamaGPT, do `Ctrl + C` in Terminal.
 
-### Install LlamaGPT anywhere else with Docker (CPU only)
+### Install LlamaGPT anywhere else with Docker
 
 You can run LlamaGPT on any x86 or arm64 system. Make sure you have Docker installed.
 
@@ -109,6 +109,12 @@ Run LlamaGPT with the following command:
 
 ```
 ./run.sh --model 7b
+```
+
+Or if you have an NVIDIA GPU, you can run LlamaGPT with CUDA support for faster interference with:
+
+```
+./run.sh --model 7b --with-cuda
 ```
 
 You can access LlamaGPT at `http://localhost:3000`.
@@ -216,7 +222,7 @@ We're looking to add more features to LlamaGPT. You can see the roadmap [here](h
 - [x] Moving the model out of the Docker image and into a separate volume.
 - [x] Add Metal support for M1/M2 Macs.
 - [x] Add support for Code Llama models.
-- [ ] Add CUDA support for NVIDIA GPUs (work in progress).
+- [x] Add CUDA support for NVIDIA GPUs.
 - [ ] Add ability to load custom models.
 - [ ] Allow users to switch between models.
 
