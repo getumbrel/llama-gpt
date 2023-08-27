@@ -56,14 +56,14 @@ https://github.com/getumbrel/llama-gpt/assets/10330103/5d1a76b8-ed03-4a51-90bd-1
 
 Currently, LlamaGPT supports the following models. Support for running custom models is on the roadmap.
 
-| Model name                               | Model size | Model download size | RAM required |
-| ---------------------------------------- | ---------- | ------------------- | ------------ |
-| Nous Hermes Llama 2 7B Chat (GGML q4_0)  | 7B         | 3.79GB              | 6.29GB       |
-| Nous Hermes Llama 2 13B Chat (GGML q4_0) | 13B        | 7.32GB              | 9.82GB       |
-| Nous Hermes Llama 2 70B Chat (GGML q4_0) | 70B        | 38.87GB             | 41.37GB      |
-| Code Llama 7B Chat (GGUF Q4_K_M)         | 7B         | 4.24GB              | 6.74GB       |
-| Code Llama 13B Chat (GGUF Q4_K_M)        | 13B        | 8.06GB              | 10.56GB      |
-| Phind Code Llama 34B Chat (GGUF Q4_K_M)  | 34B        | 20.22GB             | 22.72GB      |
+| Model name                               | Model size | Model download size | Memory required |
+| ---------------------------------------- | ---------- | ------------------- | --------------- |
+| Nous Hermes Llama 2 7B Chat (GGML q4_0)  | 7B         | 3.79GB              | 6.29GB          |
+| Nous Hermes Llama 2 13B Chat (GGML q4_0) | 13B        | 7.32GB              | 9.82GB          |
+| Nous Hermes Llama 2 70B Chat (GGML q4_0) | 70B        | 38.87GB             | 41.37GB         |
+| Code Llama 7B Chat (GGUF Q4_K_M)         | 7B         | 4.24GB              | 6.74GB          |
+| Code Llama 13B Chat (GGUF Q4_K_M)        | 13B        | 8.06GB              | 10.56GB         |
+| Phind Code Llama 34B Chat (GGUF Q4_K_M)  | 34B        | 20.22GB             | 22.72GB         |
 
 ## How to install
 
