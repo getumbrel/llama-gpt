@@ -110,7 +110,8 @@ done
 
 # If no model is passed, default to 7b model
 if [[ -z "$MODEL" ]]; then
-    echo "No model specified. Defaulting to 7b model."
+    echo "No model value provided. Defaulting to 7b. If you want to change the model, exit the script and use --model to provide the model value."
+    echo "Supported models are 7b, 13b, 70b, code-7b, code-13b, code-34b."
     MODEL="7b"
 fi
 
