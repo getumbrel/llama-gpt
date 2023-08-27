@@ -12,3 +12,4 @@ services:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://host.docker.internal:3001'
       - 'DEFAULT_MODEL=$MODEL'
+      - 'NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT=${DEFAULT_SYSTEM_PROMPT:-"You are a helpful and friendly AI assistant. Respond very concisely and use markdown if responding with code."}'
