@@ -6,7 +6,10 @@
 <p align="center">
   <h1 align="center">LlamaGPT</h1>
   <p align="center">
-    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device. New: Code Llama support!
+    A self-hosted, offline, ChatGPT-like chatbot, powered by Llama 2. 100% private, with no data leaving your device.
+    <br/>
+    <strong>New: Support for Code Llama models and Nvidia GPUs.</strong>
+    <br />
     <br />
     <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
     <br />
@@ -38,7 +41,7 @@
 3. [How to install](#how-to-install)
    - [On umbrelOS home server](#install-llamagpt-on-your-umbrelos-home-server)
    - [On M1/M2 Mac](#install-llamagpt-on-m1m2-mac)
-   - [Anywhere else with Docker (CPU only)](#install-llamagpt-anywhere-else-with-docker-cpu-only)
+   - [Anywhere else with Docker](#install-llamagpt-anywhere-else-with-docker)
    - [Kubernetes](#install-llamagpt-with-kubernetes)
 4. [OpenAI-compatible API](#openai-compatible-api)
 5. [Benchmarks](#benchmarks)
@@ -53,14 +56,14 @@ https://github.com/getumbrel/llama-gpt/assets/10330103/5d1a76b8-ed03-4a51-90bd-1
 
 Currently, LlamaGPT supports the following models. Support for running custom models is on the roadmap.
 
-| Model name                               | Model size | Model download size | RAM required |
-| ---------------------------------------- | ---------- | ------------------- | ------------ |
-| Nous Hermes Llama 2 7B Chat (GGML q4_0)  | 7B         | 3.79GB              | 6.29GB       |
-| Nous Hermes Llama 2 13B Chat (GGML q4_0) | 13B        | 7.32GB              | 9.82GB       |
-| Nous Hermes Llama 2 70B Chat (GGML q4_0) | 70B        | 38.87GB             | 41.37GB      |
-| Code Llama 7B Chat (GGUF Q4_K_M)         | 7B         | 4.24GB              | 6.74GB       |
-| Code Llama 13B Chat (GGUF Q4_K_M)        | 13B        | 8.06GB              | 10.56GB      |
-| Phind Code Llama 34B Chat (GGUF Q4_K_M)  | 34B        | 20.22GB             | 22.72GB      |
+| Model name                               | Model size | Model download size | Memory required |
+| ---------------------------------------- | ---------- | ------------------- | --------------- |
+| Nous Hermes Llama 2 7B Chat (GGML q4_0)  | 7B         | 3.79GB              | 6.29GB          |
+| Nous Hermes Llama 2 13B Chat (GGML q4_0) | 13B        | 7.32GB              | 9.82GB          |
+| Nous Hermes Llama 2 70B Chat (GGML q4_0) | 70B        | 38.87GB             | 41.37GB         |
+| Code Llama 7B Chat (GGUF Q4_K_M)         | 7B         | 4.24GB              | 6.74GB          |
+| Code Llama 13B Chat (GGUF Q4_K_M)        | 13B        | 8.06GB              | 10.56GB         |
+| Phind Code Llama 34B Chat (GGUF Q4_K_M)  | 34B        | 20.22GB             | 22.72GB         |
 
 ## How to install
 
@@ -87,14 +90,14 @@ Run LlamaGPT with the following command:
 ./run-mac.sh --model 7b
 ```
 
-You can access LlamaGPT at `http://localhost:3000`.
+You can access LlamaGPT at http://localhost:3000.
 
-To run 13B or 70B chat models, replace `7b` with `13b` or `70b` respectively.
-To run 7B, 13B or 34B Code Llama models, replace `7b` with `code-7b`, `code-13b` or `code-34b` respectively.
+> To run 13B or 70B chat models, replace `7b` with `13b` or `70b` respectively.
+> To run 7B, 13B or 34B Code Llama models, replace `7b` with `code-7b`, `code-13b` or `code-34b` respectively.
 
 To stop LlamaGPT, do `Ctrl + C` in Terminal.
 
-### Install LlamaGPT anywhere else with Docker (CPU only)
+### Install LlamaGPT anywhere else with Docker
 
 You can run LlamaGPT on any x86 or arm64 system. Make sure you have Docker installed.
 
@@ -111,10 +114,16 @@ Run LlamaGPT with the following command:
 ./run.sh --model 7b
 ```
 
+Or if you have an Nvidia GPU, you can run LlamaGPT with CUDA support using the `--with-cuda` flag, like:
+
+```
+./run.sh --model 7b --with-cuda
+```
+
 You can access LlamaGPT at `http://localhost:3000`.
 
-To run 13B or 70B chat models, replace `7b` with `13b` or `70b` respectively.
-To run Code Llama 7B, 13B or 34B models, replace `7b` with `code-7b`, `code-13b` or `code-34b` respectively.
+> To run 13B or 70B chat models, replace `7b` with `13b` or `70b` respectively.
+> To run Code Llama 7B, 13B or 34B models, replace `7b` with `code-7b`, `code-13b` or `code-34b` respectively.
 
 To stop LlamaGPT, do `Ctrl + C` in Terminal.
 
@@ -130,7 +139,7 @@ To stop LlamaGPT, do `Ctrl + C` in Terminal.
 > llama-gpt-ui_1   | ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 > ```
 >
-> You can then access LlamaGPT at `http://localhost:3000`.
+> You can then access LlamaGPT at http://localhost:3000.
 
 ---
 
@@ -216,7 +225,7 @@ We're looking to add more features to LlamaGPT. You can see the roadmap [here](h
 - [x] Moving the model out of the Docker image and into a separate volume.
 - [x] Add Metal support for M1/M2 Macs.
 - [x] Add support for Code Llama models.
-- [ ] Add CUDA support for NVIDIA GPUs (work in progress).
+- [x] Add CUDA support for NVIDIA GPUs.
 - [ ] Add ability to load custom models.
 - [ ] Allow users to switch between models.
 
