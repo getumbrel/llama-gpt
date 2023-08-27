@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+# Define a function to refresh the source of .zshrc or .bashrc
 source_shell_rc() {
     # Source .zshrc or .bashrc
     if [ -f ~/.zshrc ]; then
@@ -12,11 +13,28 @@ source_shell_rc() {
     fi
 }
 
+# Define a function to install conda with Miniforge3
 install_conda() {
     # Download Miniforge3
     curl -L -o /tmp/Miniforge3.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
     bash /tmp/Miniforge3.sh
     source_shell_rc
+}
+
+# Define a function to install a specific version of llama-cpp-python
+install_llama_cpp_python() {
+    local model_type=$1
+    local version=$2
+    local installed_version=$(pip3 show llama-cpp-python | grep -i version | awk '{print $2}')
+
+    if [[ "$installed_version" != "$version" ]]; then
+        echo "llama-cpp-python version is not $version. Installing $version version for $model_type support..."
+        pip3 uninstall llama-cpp-python -y
+        CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip3 install llama-cpp-python==$version --no-cache-dir
+        pip3 install 'llama-cpp-python[server]'
+    else
+        echo "llama-cpp-python version is $version."
+    fi
 }
 
 source_shell_rc
@@ -81,26 +99,6 @@ else
     echo "Conda environment 'llama-gpt' is already active."
 fi
 
-# Check if llama-cpp-python is already installed
-llama_cpp_python_installed=$(pip3 list | grep -q llama-cpp-python && echo "installed" || echo "not installed")
-if [[ "$llama_cpp_python_installed" == "not installed" ]]; then
-    echo "llama-cpp-python is not installed. Installing..."
-    CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip3 install -U llama-cpp-python --no-cache-dir
-    pip3 install 'llama-cpp-python[server]'
-else
-    echo "llama-cpp-python is installed."
-    # Check if llama-cpp-python version is greater than 0.1.62
-    llama_cpp_python_version=$(echo "$llama_cpp_python_installed" | grep -i version | cut -d ' ' -f 2)
-    if [[ $(echo "$llama_cpp_python_version 0.1.62" | awk '{print ($1 > $2)}') -eq 1 ]]; then
-        echo "llama-cpp-python version is greater than 0.1.62. No need to install."
-    else
-        echo "Updating llama-cpp-python to the latest version..."
-        pip3 uninstall llama-cpp-python -y
-        CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip3 install -U llama-cpp-python --no-cache-dir
-        pip3 install 'llama-cpp-python[server]'
-    fi
-fi
-
 # Parse command line arguments for --model
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -116,29 +114,95 @@ if [[ -z "$MODEL" ]]; then
     MODEL="7b"
 fi
 
+# Get the number of available CPU cores and subtract 2
+n_threads=$(($(sysctl -n hw.logicalcpu) - 2))
+
+# Define context window
+n_ctx=4096
+
+# Define batch size
+n_batch=2096
+
+# Define number of GPU layers
+n_gpu_layers=1
+
+# Define grouping factor
+N_GQA=1
+
+model_type="gguf"
+
 # Set values for MODEL and MODEL_DOWNLOAD_URL based on the model passed
 case $MODEL in
     7b) 
         MODEL="./models/llama-2-7b-chat.bin"
         MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/Nous-Hermes-Llama-2-7B-GGML/resolve/main/nous-hermes-llama-2-7b.ggmlv3.q4_0.bin"
+        model_type="ggml"
         ;;
     13b) 
         MODEL="./models/llama-2-13b-chat.bin"
         MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q4_0.bin"
+        model_type="ggml"
+        n_gpu_layers=2
         ;;
     70b) 
         MODEL="./models/llama-2-70b-chat.bin"
         MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/Llama-2-70B-Chat-GGML/resolve/main/llama-2-70b-chat.ggmlv3.q4_0.bin"
+        model_type="ggml"
+        n_gpu_layers=3
+        # Llama 2 70B's grouping factor is 8 compared to 7B and 13B's 1.
+        N_GQA=8
+        ;;
+    code-7b)
+        MODEL="./models/code-llama-7b-chat.gguf"
+        MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q4_K_M.gguf"
+        DEFAULT_SYSTEM_PROMPT="You are a helpful coding assistant. Use markdown when responding with code."
+        n_gpu_layers=1
+        n_ctx=8192
+        ;;
+    code-13b)
+        MODEL="./models/code-llama-13b-chat.gguf"
+        MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-GGUF/resolve/main/codellama-13b-instruct.Q4_K_M.gguf"
+        DEFAULT_SYSTEM_PROMPT="You are a helpful coding assistant. Use markdown when responding with code."
+        n_gpu_layers=2
+        n_ctx=8192
+        ;;
+    code-34b)
+        MODEL="./models/code-llama-34b-chat.gguf"
+        MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v1-GGUF/resolve/main/phind-codellama-34b-v1.Q4_K_M.gguf"
+        DEFAULT_SYSTEM_PROMPT="You are a helpful coding assistant. Use markdown when responding with code."
+        n_gpu_layers=3
+        n_ctx=8192
+        # Code Llama 34B's grouping factor is 8 compared to 7B and 13B's 1.
+        N_GQA=8
         ;;
     *) 
         echo "Invalid model passed: $MODEL"; exit 1 
         ;;
 esac
 
+# Check if llama-cpp-python is already installed
+llama_cpp_python_installed=$(pip3 list | grep -q llama-cpp-python && echo "installed" || echo "not installed")
+if [[ "$llama_cpp_python_installed" == "not installed" ]]; then
+    echo "llama-cpp-python is not installed. Installing..."
+    if [[ "$model_type" == "ggml" ]]; then
+        install_llama_cpp_python "GGML" "0.1.78"
+    else
+        install_llama_cpp_python "GGUF" "0.1.80"
+    fi
+else
+    echo "llama-cpp-python is installed."
+    if [[ "$model_type" == "ggml" ]]; then
+        install_llama_cpp_python "GGML" "0.1.78"
+    else
+        install_llama_cpp_python "GGUF" "0.1.80"
+    fi
+fi
+
+
 # Check if the model file exists
 if [ ! -f $MODEL ]; then
     echo "Model file not found. Downloading..."
-    # Download the model file
+    # Download the model file with a custom progress bar showing percentage, download speed, downloaded, total size, and estimated time remaining
     curl -L -o $MODEL $MODEL_DOWNLOAD_URL
     if [ $? -ne 0 ]; then
         echo "Download failed. Trying with TLS 1.2..."
@@ -148,53 +212,34 @@ else
     echo "$MODEL model found."
 fi
 
-# Get the number of available CPU cores and subtract 2
-n_threads=$(($(sysctl -n hw.logicalcpu) - 2))
-
-# Define context window
-n_ctx=4096
-
-# Offload automatically to GPU
-n_gpu_layers=1
-
-# Define batch size
-n_batch=2096
-
 # Display configuration information
 echo "Initializing server with:"
 echo "Batch size: $n_batch"
 echo "Number of CPU threads: $n_threads"
 echo "Number of GPU layers: $n_gpu_layers"
 echo "Context window: $n_ctx"
+echo "GQA: $n_gqa"
 
-# Export MODEL as an environment variable
+# Export environment variables
 export MODEL
+export N_GQA
+export DEFAULT_SYSTEM_PROMPT
 
 # Run docker-compose with the macOS yml file
 docker compose -f ./docker-compose-mac.yml up --remove-orphans --build &
 
-# Get the PID of the docker-compose command
-DOCKER_COMPOSE_PID=$!
-
-# Llama 2 70B's grouping factor is 8 compared to 7B and 13B's 1. Currently,
-# it's not possible to change this using --n_gqa with llama-cpp-python in
-# run.sh, so we expose it as an environment variable.
-# See: https://github.com/abetlen/llama-cpp-python/issues/528
-# and: https://github.com/facebookresearch/llama/issues/407
-if [[ $MODEL == "./models/llama-2-70b-chat.bin" ]]; then
-    export N_GQA=8
-fi
-
 # Run the server
-python3 -m llama_cpp.server  --n_ctx $n_ctx --n_threads $n_threads --n_gpu_layers $n_gpu_layers --n_batch $n_batch --model $MODEL --port 3001 &
-
-# Get the PID of the python3 command
-PYTHON_PID=$!
+python3 -m llama_cpp.server --n_ctx $n_ctx --n_threads $n_threads --n_gpu_layers $n_gpu_layers --n_batch $n_batch --model $MODEL --port 3001 &
 
 # Define a function to stop docker-compose and the python3 command
 stop_commands() {
-    kill $DOCKER_COMPOSE_PID
-    kill $PYTHON_PID
+    echo "Stopping docker-compose..."
+    docker compose -f ./docker-compose-mac.yml down
+    echo "Stopping python server..."
+    pkill -f "python3 -m llama_cpp.server"
+    echo "Deactivating conda environment..."
+    conda deactivate
+    echo "All processes stopped."
 }
 
 # Set a trap to catch SIGINT and stop the commands
