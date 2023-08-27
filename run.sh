@@ -7,10 +7,12 @@ then
     exit
 fi
 
-# Parse command line arguments for model value
+# Parse command line arguments for model value and check for --with-cuda flag
+with_cuda=0
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --model) model="$2"; shift ;;
+        --with-cuda) with_cuda=1 ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -87,9 +89,19 @@ esac
 
 # Run docker compose with docker-compose-ggml.yml or docker-compose-gguf.yml
 
-if [ "$model_type" = "ggml" ]
+if [ "$with_cuda" -eq 1 ]
 then
-    docker-compose -f docker-compose.yml up --build
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose-cuda-ggml.yml up --build
+    else
+        docker compose -f docker-compose-cuda-gguf.yml up --build
+    fi
 else
-    docker-compose -f docker-compose-gguf.yml up --build
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose.yml up --build
+    else
+        docker compose -f docker-compose-gguf.yml up --build
+    fi
 fi

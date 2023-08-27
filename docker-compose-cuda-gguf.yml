@@ -1,0 +1,46 @@
+version: '3.6'
+
+services:
+  llama-gpt-api-cuda-gguf:
+    build:
+      context: ./cuda
+      dockerfile: gguf.Dockerfile
+    restart: on-failure
+    volumes:
+      - './models:/models'
+      - './cuda:/cuda'
+    ports:
+      - 3001:8000
+    environment:
+      MODEL: '/models/${MODEL_NAME:-code-llama-2-7b-chat.gguf}'
+      MODEL_DOWNLOAD_URL: '${MODEL_DOWNLOAD_URL:-https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q4_K_M.gguf}'
+      N_GQA: '${N_GQA:-1}'
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
+      - SYS_RESOURCE
+    command: '/bin/sh /cuda/run.sh'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  llama-gpt-ui:
+    # TODO: Use this image instead of building from source after the next release
+    # image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: on-failure
+    environment:
+      - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
+      - 'OPENAI_API_HOST=http://llama-gpt-api-cuda-gguf:8000'
+      - 'DEFAULT_MODEL=/models/${MODEL_NAME:-code-llama-2-7b-chat.gguf}'
+      - 'NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT=${DEFAULT_SYSTEM_PROMPT:-"You are a helpful and friendly AI assistant. Respond very concisely."}'
+      - 'WAIT_HOSTS=llama-gpt-api-cuda-gguf:8000'
+      - 'WAIT_TIMEOUT=${WAIT_TIMEOUT:-3600}'

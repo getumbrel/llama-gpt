@@ -1,0 +1,46 @@
+version: '3.6'
+
+services:
+  llama-gpt-api-cuda-ggml:
+    build:
+      context: ./cuda
+      dockerfile: ggml.Dockerfile
+    restart: on-failure
+    volumes:
+      - './models:/models'
+      - './cuda:/cuda'
+    ports:
+      - 3001:8000
+    environment:
+      MODEL: '/models/${MODEL_NAME:-llama-2-7b-chat.bin}'
+      MODEL_DOWNLOAD_URL: '${MODEL_DOWNLOAD_URL:-https://huggingface.co/TheBloke/Nous-Hermes-Llama-2-7B-GGML/resolve/main/nous-hermes-llama-2-7b.ggmlv3.q4_0.bin}'
+      N_GQA: '${N_GQA:-1}'
+      USE_MLOCK: 1
+    cap_add:
+      - IPC_LOCK
+      - SYS_RESOURCE
+    command: '/bin/sh /cuda/run.sh'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  llama-gpt-ui:
+    # TODO: Use this image instead of building from source after the next release
+    # image: 'ghcr.io/getumbrel/llama-gpt-ui:latest'
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: on-failure
+    environment:
+      - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
+      - 'OPENAI_API_HOST=http://llama-gpt-api-cuda-ggml:8000'
+      - 'DEFAULT_MODEL=/models/${MODEL_NAME:-llama-2-7b-chat.bin}'
+      - 'NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT=${DEFAULT_SYSTEM_PROMPT:-"You are a helpful and friendly AI assistant. Respond very concisely."}'
+      - 'WAIT_HOSTS=llama-gpt-api-cuda-ggml:8000'
+      - 'WAIT_TIMEOUT=${WAIT_TIMEOUT:-3600}'
