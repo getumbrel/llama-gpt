@@ -8,9 +8,9 @@ metadata:
     {{- include "llamagpt.labels" . | nindent 4 }}
 data:
   DEFAULT_MODEL: {{ .Values.api.defaultModel }}
-  OPENAI_API_HOST: http://{{ template "llamagpt.fullname" . }}-api:{{ .Values.api.service.port }}
-  OPENAI_API_KEY: sk-XXXXXXXXXXXXXXXXXXXX
-  WAIT_HOSTS: {{ template "llamagpt.fullname" . }}-api:{{ .Values.api.service.port }}
-  WAIT_TIMEOUT: "600"
+  OPENAI_API_HOST: http://{{ template "llamagpt.api.openAi.host" . }}
+  OPENAI_API_KEY: {{ .Values.api.openAi.key }}
+  WAIT_HOSTS: {{ template "llamagpt.api.openAi.host" . }}
+  WAIT_TIMEOUT: {{ quote .Values.api.openAi.waitTimeout }}
 
 ---

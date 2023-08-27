@@ -31,3 +31,7 @@ api:
   restartPolicy: Always
   resources:
     memory: 5Gi
+  openAi:
+    host:
+    key: sk-XXXXXXXXXXXXXXXXXXXX
+    waitTimeout: 600

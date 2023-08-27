@@ -60,3 +60,7 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "llamagpt.api.openAi.host" -}}
+{{- default (printf "%s-api:%v" (include "llamagpt.fullname" .) .Values.api.service.port) .Values.api.openAi.host }}
+{{- end }}
