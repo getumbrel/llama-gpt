@@ -21,7 +21,7 @@ ENV LLAMA_CUBLAS=1
 RUN python3 -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings
 
 # Install llama-cpp-python 0.1.80 which has GGUF support (build with cuda)
-RUN FORCE_CMAKE=1 pip install llama-cpp-python==0.1.80
+RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python==0.1.80
 
 # Run the server
 CMD python3 -m llama_cpp.server
