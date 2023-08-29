@@ -51,6 +51,13 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
+# Figure out which "docker compose" command to use
+if command -v docker-compose &>/dev/null; then
+    docker_compose="docker-compose"
+else
+    docker_compose="docker compose"
+fi
+
 # Check if python3 is installed
 if ! command -v python3 &> /dev/null; then
     echo "Python3 is not installed. Exiting..."
@@ -227,7 +234,7 @@ export N_GQA
 export DEFAULT_SYSTEM_PROMPT
 
 # Run docker-compose with the macOS yml file
-docker compose -f ./docker-compose-mac.yml up --remove-orphans --build &
+$docker_compose -f ./docker-compose-mac.yml up --remove-orphans --build &
 
 # Run the server
 python3 -m llama_cpp.server --n_ctx $n_ctx --n_threads $n_threads --n_gpu_layers $n_gpu_layers --n_batch $n_batch --model $MODEL --port 3001 &
@@ -235,7 +242,7 @@ python3 -m llama_cpp.server --n_ctx $n_ctx --n_threads $n_threads --n_gpu_layers
 # Define a function to stop docker-compose and the python3 command
 stop_commands() {
     echo "Stopping docker-compose..."
-    docker compose -f ./docker-compose-mac.yml down
+    $docker_compose -f ./docker-compose-mac.yml down
     echo "Stopping python server..."
     pkill -f "python3 -m llama_cpp.server"
     echo "Deactivating conda environment..."

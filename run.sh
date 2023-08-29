@@ -7,6 +7,13 @@ then
     exit
 fi
 
+# Figure out which "docker compose" command to use
+if command -v docker-compose &>/dev/null; then
+    docker_compose="docker-compose"
+else
+    docker_compose="docker compose"
+fi
+
 # Parse command line arguments for model value and check for --with-cuda flag
 with_cuda=0
 while [[ "$#" -gt 0 ]]; do
@@ -93,15 +100,15 @@ if [ "$with_cuda" -eq 1 ]
 then
     if [ "$model_type" = "ggml" ]
     then
-        docker compose -f docker-compose-cuda-ggml.yml up --build
+        $docker_compose -f docker-compose-cuda-ggml.yml up --build
     else
-        docker compose -f docker-compose-cuda-gguf.yml up --build
+        $docker_compose -f docker-compose-cuda-gguf.yml up --build
     fi
 else
     if [ "$model_type" = "ggml" ]
     then
-        docker compose -f docker-compose.yml up --build
+        $docker_compose -f docker-compose.yml up --build
     else
-        docker compose -f docker-compose-gguf.yml up --build
+        $docker_compose -f docker-compose-gguf.yml up --build
     fi
 fi
