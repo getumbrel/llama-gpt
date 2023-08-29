@@ -8,7 +8,8 @@ then
 fi
 
 # Figure out which "docker compose" command to use
-if command -v docker-compose &>/dev/null; then
+if command -v docker-compose &> /dev/null
+then
     docker_compose="docker-compose"
 else
     docker_compose="docker compose"
