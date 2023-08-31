@@ -179,6 +179,7 @@ Feel free to add your own benchmarks to this table by opening a pull request.
 | ----------------------------------- | ---------------- |
 | M1 Max MacBook Pro (64GB RAM)       | 54 tokens/sec    |
 | GCP c2-standard-16 vCPU (64 GB RAM) | 16.7 tokens/sec  |
+| Ryzen 5700G 4.4GHz 4c (16 GB RAM)   | 11.50 tokens/sec |
 | GCP c2-standard-4 vCPU (16 GB RAM)  | 4.3 tokens/sec   |
 | Umbrel Home (16GB RAM)              | 2.7 tokens/sec   |
 | Raspberry Pi 4 (8GB RAM)            | 0.9 tokens/sec   |
