@@ -84,10 +84,23 @@ git clone https://github.com/getumbrel/llama-gpt.git
 cd llama-gpt
 ```
 
+
 Run LlamaGPT with the following command:
 
 ```
 ./run-mac.sh --model 7b
+```
+
+Run LlamaGPT with the following command (zsh):
+
+```
+zsh ./run-mac.sh --model 7b
+```
+
+Install Docker first if necessary 
+
+```
+brew install docker
 ```
 
 You can access LlamaGPT at http://localhost:3000.
