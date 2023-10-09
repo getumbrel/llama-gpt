@@ -1,0 +1,16 @@
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "llamagpt.fullname" . }}-configmap
+  labels:
+    {{- include "llamagpt.labels" . | nindent 4 }}
+data:
+  DEFAULT_MODEL: {{ .Values.api.defaultModel }}
+  OPENAI_API_HOST: http://{{ template "llamagpt.api.openAi.host" . }}
+  OPENAI_API_KEY: {{ .Values.api.openAi.key }}
+  WAIT_HOSTS: {{ template "llamagpt.api.openAi.host" . }}
+  WAIT_TIMEOUT: {{ quote .Values.api.openAi.waitTimeout }}
+
+---

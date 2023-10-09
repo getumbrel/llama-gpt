@@ -1,0 +1,66 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: {{ template "llamagpt.fullname" . }}-api
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-api
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      service: {{ template "llamagpt.fullname" . }}-api
+  template:
+    metadata:
+      labels:
+        service: {{ template "llamagpt.fullname" . }}-api
+        {{- include "llamagpt.labels" . | nindent 4 }}
+    spec:
+      containers:
+        - name: {{ template "llamagpt.fullname" . }}-api
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          env:
+            - name: MODEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "llamagpt.fullname" . }}-configmap
+                  key: DEFAULT_MODEL
+          resources:
+            requests:
+              memory: {{ .Values.api.resources.memory }}
+      restartPolicy: {{ .Values.api.restartPolicy }}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: {{ template "llamagpt.fullname" . }}-ui
+    {{- include "llamagpt.labels" . | nindent 4 }}
+  name: {{ template "llamagpt.fullname" . }}-ui
+spec:
+  replicas: {{ .Values.ui.replicas }}
+  selector:
+    matchLabels:
+      service:  {{ template "llamagpt.fullname" . }}-ui
+  template:
+    metadata:
+      labels:
+        service:  {{ template "llamagpt.fullname" . }}-ui
+        {{- include "llamagpt.labels" . | nindent 4 }}
+    spec:
+      containers:
+        - name:  {{ template "llamagpt.fullname" . }}-ui
+          image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
+          envFrom:
+          - configMapRef:
+              name:  {{ template "llamagpt.fullname" . }}-configmap
+          ports:
+            - containerPort: {{ int .Values.ui.service.internalPort }}
+          resources: {}
+      restartPolicy: {{ .Values.ui.restartPolicy }}
+
+---
