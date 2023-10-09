@@ -9,10 +9,12 @@ fi
 
 # Parse command line arguments for model value and check for --with-cuda flag
 with_cuda=0
+with_rocm=0
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --model) model="$2"; shift ;;
         --with-cuda) with_cuda=1 ;;
+        --with-rocm) with_rocm=1 ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -96,6 +98,14 @@ then
         docker compose -f docker-compose-cuda-ggml.yml up --build
     else
         docker compose -f docker-compose-cuda-gguf.yml up --build
+    fi
+elif [ "$with_rocm" -eq 1 ]
+then
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose-rocm-ggml.yml up --build
+    else
+        docker compose -f docker-compose-rocm-gguf.yml up --build
     fi
 else
     if [ "$model_type" = "ggml" ]
