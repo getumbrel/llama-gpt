@@ -141,6 +141,26 @@ To stop LlamaGPT, do `Ctrl + C` in Terminal.
 >
 > You can then access LlamaGPT at http://localhost:3000.
 
+In Linux, some users might experience an error even when they have Docker properly installed.
+> Error response from daemon: could not select device driver "nvidia" with capabilities: [[gpu]]
+
+You might need to install the nvidia-docker package:
+
+```
+# Debian based
+sudo apt install -y nvidia-docker2
+```
+```
+# Arch based
+yay -S nvidia-docker
+```
+And then restart Docker
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+
 ---
 
 ### Install LlamaGPT with Kubernetes
