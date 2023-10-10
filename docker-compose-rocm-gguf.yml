@@ -6,6 +6,8 @@ services:
       context: ./rocm
       dockerfile: gguf.Dockerfile
     restart: on-failure
+    devices:
+          - /dev/dri:/dev/dri
     volumes:
       - './models:/models'
       - './rocm:/rocm'
@@ -20,13 +22,6 @@ services:
       - IPC_LOCK
       - SYS_RESOURCE
     command: '/bin/sh /rocm/run.sh'
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: amdgpu
-              count: 1
-              capabilities: [gpu]
 
   llama-gpt-ui:
     # TODO: Use this image instead of building from source after the next release
