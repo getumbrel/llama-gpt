@@ -93,6 +93,7 @@ const Home = ({
 
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });
+    console.log(data);
   }, [data, dispatch]);
 
   useEffect(() => {
