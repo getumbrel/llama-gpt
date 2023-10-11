@@ -69,6 +69,7 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
+      currentModel,
       temperature,
     },
     dispatch,
@@ -92,8 +93,7 @@ const Home = ({
   );
 
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
-    console.log(data);
+    if (data) dispatch({ field: 'currentModel', value: data });
   }, [data, dispatch]);
 
   useEffect(() => {

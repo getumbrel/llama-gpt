@@ -1,7 +1,7 @@
 import { Conversation, Message } from '@/types/chat';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
-import { OpenAIModel, OpenAIModelID, OpenAIModels } from '@/types/openai';
+import { fallbackModelID, OpenAIModel, OpenAIModelID, OpenAIModels } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 
@@ -13,6 +13,7 @@ export interface HomeInitialState {
   messageIsStreaming: boolean;
   modelError: ErrorMessage | null;
   models: OpenAIModel[];
+  currentModel: OpenAIModel;
   folders: FolderInterface[];
   conversations: Conversation[];
   selectedConversation: Conversation | undefined;
@@ -37,6 +38,7 @@ export const initialState: HomeInitialState = {
   messageIsStreaming: false,
   modelError: null,
   models: Object.values(OpenAIModels),
+  currentModel: OpenAIModels[fallbackModelID],
   folders: [],
   conversations: [],
   selectedConversation: undefined,
