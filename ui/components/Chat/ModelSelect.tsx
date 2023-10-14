@@ -17,12 +17,14 @@ export const ModelSelect = () => {
   } = useContext(HomeContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const model = models.find(
+      (model) => model.id === e.target.value,
+    ) as OpenAIModel
+    // Implement model switcher
     selectedConversation &&
       handleUpdateConversation(selectedConversation, {
         key: 'model',
-        value: models.find(
-          (model) => model.id === e.target.value,
-        ) as OpenAIModel,
+        value: model,
       });
   };
 
