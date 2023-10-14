@@ -3,11 +3,17 @@ import { spawn } from 'child_process';
 import axios from 'axios'; 
 import { fileURLToPath } from 'url';
 import path from 'path';
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+app.use(cors({
+  origin: '*',
+}));
+
 app.use(express.json());
 const port = 3002;
 
