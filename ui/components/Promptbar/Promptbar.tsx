@@ -5,7 +5,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import { savePrompts } from '@/utils/app/prompts';
 
-import { OpenAIModels } from '@/types/openai';
+import { LlamaModels } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/pages/api/home/home.context';
@@ -50,7 +50,7 @@ const Promptbar = () => {
         name: `Prompt ${prompts.length + 1}`,
         description: '',
         content: '',
-        model: OpenAIModels[defaultModelId],
+        model: LlamaModels[defaultModelId],
         folderId: null,
       };
 

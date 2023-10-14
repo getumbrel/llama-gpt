@@ -1,7 +1,7 @@
 import { Conversation, Message } from '@/types/chat';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
-import { fallbackModelID, OpenAIModel, OpenAIModelID, OpenAIModels } from '@/types/openai';
+import { fallbackModelID, LlamaModel, LlamaModelID, LlamaModels } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 
@@ -12,8 +12,8 @@ export interface HomeInitialState {
   lightMode: 'light' | 'dark';
   messageIsStreaming: boolean;
   modelError: ErrorMessage | null;
-  models: OpenAIModel[];
-  currentModel: OpenAIModel;
+  models: LlamaModel[];
+  currentModel: LlamaModel;
   folders: FolderInterface[];
   conversations: Conversation[];
   selectedConversation: Conversation | undefined;
@@ -25,7 +25,7 @@ export interface HomeInitialState {
   currentFolder: FolderInterface | undefined;
   messageError: boolean;
   searchTerm: string;
-  defaultModelId: OpenAIModelID | undefined;
+  defaultModelId: LlamaModelID | undefined;
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
 }
@@ -37,8 +37,8 @@ export const initialState: HomeInitialState = {
   lightMode: 'dark',
   messageIsStreaming: false,
   modelError: null,
-  models: Object.values(OpenAIModels),
-  currentModel: OpenAIModels[fallbackModelID],
+  models: Object.values(LlamaModels),
+  currentModel: LlamaModels[fallbackModelID],
   folders: [],
   conversations: [],
   selectedConversation: undefined,

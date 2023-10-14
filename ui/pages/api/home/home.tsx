@@ -28,7 +28,7 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
+import { LlamaModelID, LlamaModels, fallbackModelID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -44,7 +44,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface Props {
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
-  defaultModelId: OpenAIModelID;
+  defaultModelId: LlamaModelID;
 }
 
 const Home = ({
@@ -187,10 +187,10 @@ const Home = ({
       name: t('New Conversation'),
       messages: [],
       model: lastConversation?.model || {
-        id: OpenAIModels[defaultModelId].id,
-        name: OpenAIModels[defaultModelId].name,
-        maxLength: OpenAIModels[defaultModelId].maxLength,
-        tokenLimit: OpenAIModels[defaultModelId].tokenLimit,
+        id: LlamaModels[defaultModelId].id,
+        name: LlamaModels[defaultModelId].name,
+        maxLength: LlamaModels[defaultModelId].maxLength,
+        tokenLimit: LlamaModels[defaultModelId].tokenLimit,
       },
       prompt: DEFAULT_SYSTEM_PROMPT,
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
@@ -334,7 +334,7 @@ const Home = ({
           id: uuidv4(),
           name: t('New Conversation'),
           messages: [],
-          model: OpenAIModels[defaultModelId],
+          model: LlamaModels[defaultModelId],
           prompt: DEFAULT_SYSTEM_PROMPT,
           temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
           folderId: null,
@@ -399,8 +399,8 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const defaultModelId =
     (process.env.DEFAULT_MODEL &&
-      Object.values(OpenAIModelID).includes(
-        process.env.DEFAULT_MODEL as OpenAIModelID,
+      Object.values(LlamaModelID).includes(
+        process.env.DEFAULT_MODEL as LlamaModelID,
       ) &&
       process.env.DEFAULT_MODEL) ||
     fallbackModelID;
