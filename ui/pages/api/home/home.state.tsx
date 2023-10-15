@@ -13,7 +13,7 @@ export interface HomeInitialState {
   messageIsStreaming: boolean;
   modelError: ErrorMessage | null;
   models: LlamaModel[];
-  currentModel: LlamaModel;
+  currentModel: LlamaModel | null;
   folders: FolderInterface[];
   conversations: Conversation[];
   selectedConversation: Conversation | undefined;
@@ -38,7 +38,7 @@ export const initialState: HomeInitialState = {
   messageIsStreaming: false,
   modelError: null,
   models: Object.values(LlamaModels),
-  currentModel: LlamaModels[fallbackModelID],
+  currentModel: null,
   folders: [],
   conversations: [],
   selectedConversation: undefined,

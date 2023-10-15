@@ -1,31 +1,42 @@
-import { IconExternalLink } from '@tabler/icons-react';
 import { useContext } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { OpenAIModel } from '@/types/openai';
+import { LlamaModel } from '@/types/openai';
 
 import HomeContext from '@/pages/api/home/home.context';
+import { useMutation } from 'react-query';
 
 export const ModelSelect = () => {
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, models, defaultModelId, currentModel },
-    handleUpdateConversation,
+    state: { models, defaultModelId, currentModel },
+    handleUpdateCurrentModel,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const startModel = useMutation(
+    async (codeName: string) => {
+        const response = await fetch('http://localhost:3002/start-model', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: codeName,
+          }),
+        });
+        return response.json();
+      }
+  );
+
+  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const model = models.find(
       (model) => model.id === e.target.value,
-    ) as OpenAIModel
-    // Implement model switcher
-    selectedConversation &&
-      handleUpdateConversation(selectedConversation, {
-        key: 'model',
-        value: model,
-      });
+    ) as LlamaModel
+      startModel.mutate(model.codeName);
+      handleUpdateCurrentModel(model);
   };
 
   return (
@@ -36,10 +47,13 @@ export const ModelSelect = () => {
       <div className="w-full rounded-lg border border-neutral-600 bg-transparent pr-2 text-neutral-900 dark:border-neutral-700 dark:text-white">
         <select
           className="w-full bg-transparent p-2"
-          placeholder={t('Select a model') || ''}
-          value={selectedConversation?.model?.id || currentModel.id}
+          // remove selectedConversation model because we can't have different models 
+          // per conversation as you won't be able to run it anyways without changing the model
+          value={currentModel ? currentModel.id : ''}
+          disabled={startModel.isLoading}
           onChange={handleChange}
         >
+          <option value="" disabled selected hidden>{t('Select a model') || ''}</option>
           {models.map((model) => (
             <option
               key={model.id}

@@ -28,7 +28,7 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { LlamaModelID, LlamaModels, fallbackModelID } from '@/types/openai';
+import { LlamaModelID, LlamaModels, fallbackModelID, LlamaModel } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -53,7 +53,7 @@ const Home = ({
   defaultModelId,
 }: Props) => {
   const { t } = useTranslation('chat');
-  const { getModels } = useApiService();
+  // const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
@@ -77,28 +77,31 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
-  const { data, error, refetch } = useQuery(
-    ['GetModels', apiKey, serverSideApiKeyIsSet],
-    ({ signal }) => {
-      if (!apiKey && !serverSideApiKeyIsSet) return null;
+  // RETHINK THIS !!!
+  // const { data, error, refetch } = useQuery(
+  //   ['GetModels', apiKey, serverSideApiKeyIsSet],
+  //   ({ signal }) => {
+  //     if (!apiKey && !serverSideApiKeyIsSet) return null;
 
-      return getModels(
-        {
-          key: apiKey,
-        },
-        signal,
-      );
-    },
-    { enabled: true, refetchOnMount: false },
-  );
+  //     return getModels(
+  //       {
+  //         key: apiKey,
+  //       },
+  //       signal,
+  //     );
+  //   },
+  //   { enabled: true, refetchOnMount: false },
+  // );
 
-  useEffect(() => {
-    if (data) dispatch({ field: 'currentModel', value: data });
-  }, [data, dispatch]);
+  // Changed this because `models` will be now pre-populated with all the models.
+  // We will now get the value from the api for the current running model.
+  // useEffect(() => {
+  //   if (data) dispatch({ field: 'currentModel', value: data });
+  // }, [data, dispatch]);
 
-  useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
-  }, [dispatch, error, getModelsError]);
+  // useEffect(() => {
+  //   dispatch({ field: 'modelError', value: getModelsError(error) });
+  // }, [dispatch, error, getModelsError]);
 
   // FETCH MODELS ----------------------------------------------
 
@@ -110,6 +113,10 @@ const Home = ({
 
     saveConversation(conversation);
   };
+
+  const handleUpdateCurrentModel = (model: LlamaModel) => {
+    dispatch({ field: 'currentModel', value: model });
+  }
 
   // FOLDER OPERATIONS  --------------------------------------------
 
@@ -357,6 +364,7 @@ const Home = ({
         handleDeleteFolder,
         handleUpdateFolder,
         handleSelectConversation,
+        handleUpdateCurrentModel,
         handleUpdateConversation,
       }}
     >
