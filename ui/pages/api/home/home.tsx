@@ -53,7 +53,7 @@ const Home = ({
   defaultModelId,
 }: Props) => {
   const { t } = useTranslation('chat');
-  // const { getModels } = useApiService();
+  const { getRunningModel } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
@@ -77,28 +77,30 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
-  // RETHINK THIS !!!
-  // const { data, error, refetch } = useQuery(
-  //   ['GetModels', apiKey, serverSideApiKeyIsSet],
-  //   ({ signal }) => {
-  //     if (!apiKey && !serverSideApiKeyIsSet) return null;
+  const { data, error, refetch } = useQuery(
+    ['GetModels', apiKey, serverSideApiKeyIsSet],
+    ({ signal }) => {
+      // Why is this here ?
+      if (!apiKey && !serverSideApiKeyIsSet) return null;
 
-  //     return getModels(
-  //       {
-  //         key: apiKey,
-  //       },
-  //       signal,
-  //     );
-  //   },
-  //   { enabled: true, refetchOnMount: false },
-  // );
+      return getRunningModel(
+        {
+          key: apiKey,
+        },
+        signal,
+      );
+    },
+    { enabled: true, refetchOnMount: false },
+  );
 
   // Changed this because `models` will be now pre-populated with all the models.
   // We will now get the value from the api for the current running model.
-  // useEffect(() => {
-  //   if (data) dispatch({ field: 'currentModel', value: data });
-  // }, [data, dispatch]);
+  useEffect(() => {
+    // @ts-ignore
+    if (data) dispatch({ field: 'currentModel', value: LlamaModels[data[0].id] });
+  }, [data, dispatch]);
 
+  // This won't be needed because if the it's an Error, then currentModel will be null. In that case we will have to choose the model.
   // useEffect(() => {
   //   dispatch({ field: 'modelError', value: getModelsError(error) });
   // }, [dispatch, error, getModelsError]);

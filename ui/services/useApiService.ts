@@ -25,22 +25,22 @@ const useApiService = () => {
   // 	[fetchService]
   // );
 
-  // const getModels = useCallback(
-  //   (params: GetModelsRequestProps, signal?: AbortSignal) => {
-  //     return fetchService.post<GetModelsRequestProps>(`/api/models`, {
-  //       body: { key: params.key },
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       signal,
-  //     });
-  //   },
-  //   [fetchService],
-  // );
+  const getRunningModel = useCallback(
+    (params: GetModelsRequestProps, signal?: AbortSignal) => {
+      return fetchService.post<GetModelsRequestProps>(`/api/models`, {
+        body: { key: params.key },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal,
+      });
+    },
+    [fetchService],
+  );
 
-  // return {
-  //   getModels,
-  // };
+  return {
+    getRunningModel,
+  };
 };
 
 export default useApiService;
