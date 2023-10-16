@@ -5,9 +5,9 @@ import { ActionType } from '@/hooks/useCreateReducer';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderType } from '@/types/folder';
+import { LlamaModel, LlamaModelID } from '@/types/openai';
 
 import { HomeInitialState } from './home.state';
-import { LlamaModel, LlamaModelID } from '@/types/openai';
 
 export interface HomeContextProps {
   state: HomeInitialState;

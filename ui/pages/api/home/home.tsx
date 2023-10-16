@@ -28,7 +28,12 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { LlamaModelID, LlamaModels, fallbackModelID, LlamaModel } from '@/types/openai';
+import {
+  LlamaModel,
+  LlamaModelID,
+  LlamaModels,
+  fallbackModelID,
+} from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -97,7 +102,9 @@ const Home = ({
   useEffect(() => {
     if (data) {
       // @ts-ignore
-      const modelId = data[0].id.startsWith('.') ? data[0].id.slice(1) : data[0].id;
+      const modelId = data[0].id.startsWith('.')
+        ? data[0].id.slice(1)
+        : data[0].id;
       // @ts-ignore
       dispatch({ field: 'currentModel', value: LlamaModels[modelId] });
     }
@@ -121,7 +128,7 @@ const Home = ({
 
   const handleUpdateCurrentModel = (model: LlamaModel) => {
     dispatch({ field: 'currentModel', value: model });
-  }
+  };
 
   // FOLDER OPERATIONS  --------------------------------------------
 
@@ -375,7 +382,10 @@ const Home = ({
     >
       <Head>
         <title>LlamaGPT</title>
-        <meta name="description" content="Chat with a local LLM on your Umbrel without leaking your data to OpenAI" />
+        <meta
+          name="description"
+          content="Chat with a local LLM on your Umbrel without leaking your data to OpenAI"
+        />
         <meta
           name="viewport"
           content="height=device-height ,width=device-width, initial-scale=1, user-scalable=no"

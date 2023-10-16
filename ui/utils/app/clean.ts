@@ -16,7 +16,9 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   if (!updatedConversation.model) {
     updatedConversation = {
       ...updatedConversation,
-      model: updatedConversation.model || LlamaModels[LlamaModelID.LLAMA_7B_CHAT_GGMLV3_Q4_0],
+      model:
+        updatedConversation.model ||
+        LlamaModels[LlamaModelID.LLAMA_7B_CHAT_GGMLV3_Q4_0],
     };
   }
 
@@ -67,7 +69,8 @@ export const cleanConversationHistory = (history: any[]): Conversation[] => {
   return history.reduce((acc: any[], conversation) => {
     try {
       if (!conversation.model) {
-        conversation.model = LlamaModels[LlamaModelID.LLAMA_7B_CHAT_GGMLV3_Q4_0];
+        conversation.model =
+          LlamaModels[LlamaModelID.LLAMA_7B_CHAT_GGMLV3_Q4_0];
       }
 
       if (!conversation.prompt) {
