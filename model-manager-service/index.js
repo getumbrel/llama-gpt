@@ -89,6 +89,20 @@ async function startModel(model, res) {
   pollServerInterval = setInterval(() => pollServer(res, model, pollServerInterval), 1000);
 }
 
+// Function to handle SIGINT signal
+function handleSIGINT() {
+  if (runningModelProcess) {
+    isModelStopping = true;
+    // Send a SIGINT signal to the child process
+    runningModelProcess.kill('SIGINT');
+  }
+  // Exit the main process gracefully
+  process.exit(0);
+}
+
+// Listen for the SIGINT signal and call the handler
+process.on('SIGINT', handleSIGINT);
+
 // Endpoint to start a model
 app.post('/start-model', (req, res) => {
   const { model } = req.body;
