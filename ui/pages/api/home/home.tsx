@@ -69,14 +69,13 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
-      currentModel,
-      temperature,
     },
     dispatch,
   } = contextValue;
 
   const stopConversationRef = useRef<boolean>(false);
 
+  // Use these error
   const { data, error, refetch } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
     ({ signal }) => {
@@ -96,8 +95,12 @@ const Home = ({
   // Changed this because `models` will be now pre-populated with all the models.
   // We will now get the value from the api for the current running model.
   useEffect(() => {
-    // @ts-ignore
-    if (data) dispatch({ field: 'currentModel', value: LlamaModels[data[0].id] });
+    if (data) {
+      // @ts-ignore
+      const modelId = data[0].id.startsWith('.') ? data[0].id.slice(1) : data[0].id;
+      // @ts-ignore
+      dispatch({ field: 'currentModel', value: LlamaModels[modelId] });
+    }
   }, [data, dispatch]);
 
   // This won't be needed because if the it's an Error, then currentModel will be null. In that case we will have to choose the model.

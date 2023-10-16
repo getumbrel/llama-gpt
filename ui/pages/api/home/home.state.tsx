@@ -1,7 +1,7 @@
 import { Conversation, Message } from '@/types/chat';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
-import { fallbackModelID, LlamaModel, LlamaModelID, LlamaModels } from '@/types/openai';
+import { LlamaModel, LlamaModelID, LlamaModels } from '@/types/openai';
 import { PluginKey } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 

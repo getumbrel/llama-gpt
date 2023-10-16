@@ -1,6 +1,6 @@
 import express from 'express';
 import { spawn } from 'child_process';
-import axios from 'axios'; 
+import axios from 'axios';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import cors from 'cors';
@@ -29,7 +29,10 @@ const pollServer = async (res, model, pollServerInterval) => {
     const response = await axios.get('http://localhost:3001/docs');
     if (response.status === 200) {
       clearInterval(pollServerInterval);
-      res.send(`Starting model: ${model}`);
+      res.send(JSON.stringify({
+        message: `Model ${model} started successfully.`,
+        status: 200,
+      }));
     }
   } catch (err) {
     console.log("Server isn't up yet, waiting 1 second...");
@@ -92,7 +95,10 @@ app.post('/start-model', (req, res) => {
   if (model) {
     startModel(model, res);
   } else {
-    res.status(400).send('Bad Request: Model parameter is missing in the request body.');
+    res.status(400).send(JSON.stringify({
+      message: 'No model specified.',
+      status: 400,
+    }));
   }
 });
 
@@ -100,9 +106,15 @@ app.post('/start-model', (req, res) => {
 app.post('/stop-model', (req, res) => {
   if (runningModelProcess) {
     runningModelProcess.kill('SIGINT');
-    res.send('Stopping the currently running model.');
+    res.send((JSON.stringify({
+      message: 'Model stopped successfully.',
+      status: 200,
+    })));
   } else {
-    res.send('No model is currently running.');
+    res.send((JSON.stringify({
+      message: 'No model is currently running.',
+      status: 200,
+    })));
   }
 });
 
