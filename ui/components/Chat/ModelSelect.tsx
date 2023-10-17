@@ -2,11 +2,10 @@ import { useContext } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import useModel from '@/hooks/useModel';
-
 import { LlamaModel } from '@/types/openai';
 
 import HomeContext from '@/pages/api/home/home.context';
+import useModel from '@/hooks/useModel';
 
 export const ModelSelect = () => {
   const { t } = useTranslation('chat');
@@ -19,9 +18,9 @@ export const ModelSelect = () => {
   } = useContext(HomeContext);
 
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const model = models.find((model) =>
-      e.target.value.includes(model.id),
-    ) as LlamaModel;
+    const model = models.find(
+      (model) => e.target.value.includes(model.id),
+    ) as LlamaModel
     runModel(model.codeName);
     handleUpdateCurrentModel(model);
   };
@@ -34,15 +33,13 @@ export const ModelSelect = () => {
       <div className="w-full rounded-lg border border-neutral-600 bg-transparent pr-2 text-neutral-900 dark:border-neutral-700 dark:text-white">
         <select
           className="w-full bg-transparent p-2"
-          // remove selectedConversation model because we can't have different models
+          // remove selectedConversation model because we can't have different models 
           // per conversation as you won't be able to run it anyways without changing the model
           value={currentModel ? currentModel.id : ''}
           disabled={isModelLoading}
           onChange={handleChange}
         >
-          <option value="" disabled hidden>
-            Select a model
-          </option>
+          <option value="" disabled hidden>Select a model</option>
           {models.map((model) => (
             <option
               key={model.id}
