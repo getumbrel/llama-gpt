@@ -76,7 +76,11 @@ const Home = ({
   const stopConversationRef = useRef<boolean>(false);
 
   // Use these error
-  const { data, error, refetch } = useQuery(
+  const { data, error, refetch }: {
+    data: LlamaModel[] | undefined;
+    error: Error | null;
+    refetch: () => void;
+  } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
     ({ signal }) => {
       // Why is this here ?
@@ -95,11 +99,9 @@ const Home = ({
   // Changed this because `models` will be now pre-populated with all the models.
   // We will now get the value from the api for the current running model.
   useEffect(() => {
-    if (data) {
-      // @ts-ignore
+    if (data && data[0]) {
       const modelId = data[0].id.startsWith('.') ? data[0].id.slice(1) : data[0].id;
-      // @ts-ignore
-      dispatch({ field: 'currentModel', value: LlamaModels[modelId] });
+      dispatch({ field: 'currentModel', value: LlamaModels[modelId as LlamaModelID] });
     }
   }, [data, dispatch]);
 
