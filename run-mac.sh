@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-# Define a function to refresh the source of .zshrc or .bashrc
+# Define a function to refresh the source of .zshrc, .bashrc, or .bash_profile
 source_shell_rc() {
-    # Source .zshrc or .bashrc
-    if [ -f ~/.zshrc ]; then
-        source ~/.zshrc
-    elif [ -f ~/.bashrc ]; then
-        source ~/.bashrc
-    else
-        echo "No .bashrc or .zshrc file found."
-    fi
+    [ -f ~/.zshrc ] && source ~/.zshrc || {
+        [ -f ~/.bashrc ] && source ~/.bashrc
+        [ -f ~/.bash_profile ] && source ~/.bash_profile
+
+        if [ ! -f ~/.bashrc ] && [ ! -f ~/.bash_profile ]; then
+            echo "No .zshrc, .bashrc, or .bash_profile file found."
+        fi
+    }
 }
 
 # Define a function to install conda with Miniforge3
