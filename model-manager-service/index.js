@@ -77,12 +77,22 @@ async function startModel(model, res) {
     if (code === 0) {
       console.log('Model completed successfully.');
     } else {
+      clearInterval(pollServerInterval);
+      res.send(JSON.stringify({
+        error: `Model exited with code ${code}`,
+        status: 500,
+      }));
       console.error(`Model exited with code ${code}`);
     }
   });
 
   // Handle errors in starting the child process
   runningModelProcess.on('error', (err) => {
+    clearInterval(pollServerInterval);
+    res.send(JSON.stringify({
+      error: `Error starting the model: ${err}`,
+      status: 500,
+    }));
     console.error('Error starting the model:', err);
   });
 
@@ -109,9 +119,9 @@ app.post('/start-model', (req, res) => {
   if (model) {
     startModel(model, res);
   } else {
-    res.status(400).send(JSON.stringify({
+    res.status(500).send(JSON.stringify({
       message: 'No model specified.',
-      status: 400,
+      status: 500,
     }));
   }
 });

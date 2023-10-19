@@ -26,9 +26,14 @@ const useModel = () => {
             toast.dismiss(toastId);
             toastId = toast.loading("Starting model...");
         }, 
-        onSuccess: () => {
-            toast.dismiss(toastId);
-            toast.success("Model started!");
+        onSuccess: (data) => {
+            if (data.status == 200) {
+                toast.dismiss(toastId);
+                toast.success("Model started!");
+            } else {
+                toast.dismiss(toastId);
+                toast.error("Error starting model!");
+            }
         }, 
         onError: () => {
             toast.dismiss(toastId);
