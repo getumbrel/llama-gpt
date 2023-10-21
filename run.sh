@@ -89,19 +89,31 @@ esac
 
 # Run docker compose with docker-compose-ggml.yml or docker-compose-gguf.yml
 
+docker_compose_file=""
 if [ "$with_cuda" -eq 1 ]
 then
     if [ "$model_type" = "ggml" ]
     then
-        docker compose -f docker-compose-cuda-ggml.yml up --build
+        docker_compose_file="docker-compose-cuda-ggml.yml"
     else
-        docker compose -f docker-compose-cuda-gguf.yml up --build
+        docker_compose_file="docker-compose-cuda-gguf.yml"
     fi
 else
     if [ "$model_type" = "ggml" ]
     then
-        docker compose -f docker-compose.yml up --build
+        docker_compose_file="docker-compose.yml"
     else
-        docker compose -f docker-compose-gguf.yml up --build
+        docker_compose_file="docker-compose-gguf.yml"
     fi
 fi
+
+echo "Running docker-compose..."
+docker compose -f $docker_compose_file up --build &
+DOCKER_COMPOSE_PID=$!
+
+stop_docker_compose() {
+    echo "Stopping docker-compose..."
+    docker compose -f $docker_compose_file down
+}
+
+trap stop_docker_compose SIGINT

@@ -8,6 +8,17 @@ import cors from 'cors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+let withCuda = false;
+let nonMac = false;
+
+process.argv.forEach((val, index) => {
+  if (val === '--with-cuda') {
+    withCuda = process.argv[index + 1] === '1';
+  } else if (val === '--non-mac') {
+    nonMac = process.argv[index + 1] === '1';
+  }
+});
+
 const app = express();
 
 app.use(cors({
@@ -53,9 +64,17 @@ async function startModel(model, res) {
   // Set the parent directory as the current working directory
   const parentDirectory = path.resolve(__dirname, '..');
 
-  // Define the script path and its arguments
-  const scriptPath = path.join(parentDirectory, 'run-mac-api.sh'); // Adjust the path as needed
-  const scriptArgs = ['--model', model];
+  // Have some inputs or Environment variables on which the script depends
+  let scriptPath;
+  let scriptArgs;
+
+  if (nonMac) {
+    scriptPath = path.join(parentDirectory, 'run.sh');
+    scriptArgs = withCuda ? ['--with-cuda', '--model', model] : ['--model', model];
+  } else {
+    scriptPath = path.join(parentDirectory, 'run-mac-api.sh');
+    scriptArgs = ['--model', model];
+  }
 
   // Start the new model
   runningModelProcess = spawn(shellCommand, [scriptPath, ...scriptArgs], {

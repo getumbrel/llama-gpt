@@ -14,12 +14,12 @@ source_shell_rc() {
 }
 
 # Run docker-compose with the macOS yml file
-docker compose -f ./docker-compose-mac-ui.yml up --remove-orphans --build &
+docker compose -f ./docker-compose-ui.yml up --remove-orphans --build &
 
 # Define a function to stop docker-compose and the python3 command
 stop_commands() {
     echo "Stopping docker-compose..."
-    docker compose -f ./docker-compose-mac-ui.yml down
+    docker compose -f ./docker-compose-ui.yml down
 }
 
 # Set a trap to catch SIGINT and stop the commands
