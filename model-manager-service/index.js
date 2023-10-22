@@ -64,7 +64,7 @@ async function startModel(model, res) {
   let scriptArgs;
 
   if (nonMac) {
-    scriptPath = path.join(parentDirectory, 'run.sh');
+    scriptPath = path.join(parentDirectory, 'run-api.sh');
     scriptArgs = withCuda ? ['--with-cuda', '--model', model] : ['--model', model];
   } else {
     scriptPath = path.join(parentDirectory, 'run-mac-api.sh');
