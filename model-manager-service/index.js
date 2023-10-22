@@ -53,11 +53,6 @@ const pollServer = async (res, model, pollServerInterval) => {
 async function startModel(model, res) {
   clearInterval(pollServerInterval);
 
-  if (runningModelProcess) {
-    isModelStopping = true;
-    runningModelProcess.kill('SIGINT');
-  }
-
   // Specify the Zsh shell explicitly
   const shellCommand = 'zsh';
 
@@ -146,18 +141,20 @@ app.post('/start-model', (req, res) => {
 });
 
 // Endpoint to stop the currently running model
-app.post('/stop-model', (req, res) => {
+app.post('/stop-model', async (req, res) => {
   if (runningModelProcess) {
     runningModelProcess.kill('SIGINT');
-    res.send((JSON.stringify({
-      message: 'Model stopped successfully.',
-      status: 200,
-    })));
+    runningModelProcess.on('exit', (code) => {
+      res.send(JSON.stringify({
+        message: 'Model stopped successfully.',
+        status: 200,
+      }));
+    });
   } else {
-    res.send((JSON.stringify({
+    res.send(JSON.stringify({
       message: 'No model is currently running.',
       status: 200,
-    })));
+    }));
   }
 });
 

@@ -117,3 +117,5 @@ stop_docker_compose() {
 }
 
 trap stop_docker_compose SIGINT
+
+wait $DOCKER_COMPOSE_PID

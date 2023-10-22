@@ -5,11 +5,14 @@ import { useTranslation } from 'next-i18next';
 import { LlamaModel } from '@/types/openai';
 
 import HomeContext from '@/pages/api/home/home.context';
-import useModel from '@/hooks/useModel';
+import {
+  useStartModel, stopModelCall,
+} from '@/hooks/useModel';
 
 export const ModelSelect = () => {
   const { t } = useTranslation('chat');
-  const { runModel, isModelLoading } = useModel();
+  const { runModel, runModelLoading } = useStartModel();
+  // const { stopModel } = useStopModel();
 
   const {
     state: { models, defaultModelId, currentModel },
@@ -21,6 +24,7 @@ export const ModelSelect = () => {
     const model = models.find(
       (model) => e.target.value.includes(model.id),
     ) as LlamaModel
+    await stopModelCall();
     runModel(model.codeName);
     handleUpdateCurrentModel(model);
   };
@@ -36,7 +40,7 @@ export const ModelSelect = () => {
           // remove selectedConversation model because we can't have different models 
           // per conversation as you won't be able to run it anyways without changing the model
           value={currentModel ? currentModel.id : ''}
-          disabled={isModelLoading}
+          disabled={runModelLoading}
           onChange={handleChange}
         >
           <option value="" disabled hidden>Select a model</option>

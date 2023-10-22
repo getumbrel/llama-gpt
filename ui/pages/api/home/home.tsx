@@ -121,7 +121,7 @@ const Home = ({
     saveConversation(conversation);
   };
 
-  const handleUpdateCurrentModel = (model: LlamaModel) => {
+  const handleUpdateCurrentModel = (model: LlamaModel | null) => {
     dispatch({ field: 'currentModel', value: model });
   }
 

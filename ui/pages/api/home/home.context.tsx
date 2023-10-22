@@ -21,7 +21,7 @@ export interface HomeContextProps {
     conversation: Conversation,
     data: KeyValuePair,
   ) => void;
-  handleUpdateCurrentModel: (model: LlamaModel) => void;
+  handleUpdateCurrentModel: (model: LlamaModel | null) => void;
 }
 
 const HomeContext = createContext<HomeContextProps>(undefined!);
