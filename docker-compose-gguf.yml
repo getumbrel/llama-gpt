@@ -3,7 +3,7 @@ version: '3.6'
 services:
   llama-gpt-api:
     # Pin to llama-cpp-python 0.1.80 with GGUF support
-    image: ghcr.io/abetlen/llama-cpp-python:latest@sha256:de0fd227f348b5e43d4b5b7300f1344e712c14132914d1332182e9ecfde502b2
+    image: ghcr.io/abetlen/llama-cpp-python:latest #@sha256:de0fd227f348b5e43d4b5b7300f1344e712c14132914d1332182e9ecfde502b2
     restart: on-failure
     volumes:
       - './models:/models'
