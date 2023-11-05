@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if docker compose is installed
 if ! command -v docker &> /dev/null
