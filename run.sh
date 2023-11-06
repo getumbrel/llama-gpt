@@ -10,10 +10,11 @@ fi
 # Run the service in the background and store its PID
 with_cuda=0
 non_mac=1
-
+with_rocm=0
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --with-cuda) with_cuda=1 ;;
+        --with-rocm) with_rocm=1 ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -28,6 +29,7 @@ source run-ui.sh &
 
 # Get the PID of the UI script
 UI_PID=$!
+
 
 # Define a function to stop the API and UI scripts
 stop_scripts() {
@@ -44,3 +46,29 @@ trap stop_scripts SIGINT
 # wait $API_PID
 wait $UI_PID
 wait $MODEL_MANAGER_PID
+
+if [ "$with_cuda" -eq 1 ]
+then
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose-cuda-ggml.yml up --build
+    else
+        docker compose -f docker-compose-cuda-gguf.yml up --build
+    fi
+elif [ "$with_rocm" -eq 1 ]
+then
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose-rocm-ggml.yml up --build
+    else
+        docker compose -f docker-compose-rocm-gguf.yml up --build
+    fi
+else
+    if [ "$model_type" = "ggml" ]
+    then
+        docker compose -f docker-compose.yml up --build
+    else
+        docker compose -f docker-compose-gguf.yml up --build
+    fi
+fi
+
