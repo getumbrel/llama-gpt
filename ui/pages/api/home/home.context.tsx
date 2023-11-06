@@ -7,6 +7,7 @@ import { KeyValuePair } from '@/types/data';
 import { FolderType } from '@/types/folder';
 
 import { HomeInitialState } from './home.state';
+import { LlamaModel, LlamaModelID } from '@/types/openai';
 
 export interface HomeContextProps {
   state: HomeInitialState;
@@ -20,6 +21,7 @@ export interface HomeContextProps {
     conversation: Conversation,
     data: KeyValuePair,
   ) => void;
+  handleUpdateCurrentModel: (model: LlamaModel | null) => void;
 }
 
 const HomeContext = createContext<HomeContextProps>(undefined!);

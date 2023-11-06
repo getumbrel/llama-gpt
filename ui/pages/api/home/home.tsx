@@ -28,7 +28,7 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
+import { LlamaModelID, LlamaModels, fallbackModelID, LlamaModel } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -44,7 +44,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface Props {
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
-  defaultModelId: OpenAIModelID;
+  defaultModelId: LlamaModelID;
 }
 
 const Home = ({
@@ -53,7 +53,7 @@ const Home = ({
   defaultModelId,
 }: Props) => {
   const { t } = useTranslation('chat');
-  const { getModels } = useApiService();
+  const { getRunningModel } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
@@ -69,19 +69,24 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
-      temperature,
     },
     dispatch,
   } = contextValue;
 
   const stopConversationRef = useRef<boolean>(false);
 
-  const { data, error, refetch } = useQuery(
+  // Use these error
+  const { data, error, refetch }: {
+    data: LlamaModel[] | undefined;
+    error: Error | null;
+    refetch: () => void;
+  } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
     ({ signal }) => {
+      // Why is this here ?
       if (!apiKey && !serverSideApiKeyIsSet) return null;
 
-      return getModels(
+      return getRunningModel(
         {
           key: apiKey,
         },
@@ -91,13 +96,19 @@ const Home = ({
     { enabled: true, refetchOnMount: false },
   );
 
+  // Changed this because `models` will be now pre-populated with all the models.
+  // We will now get the value from the api for the current running model.
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
+    if (data && data[0]) {
+      const modelId = data[0].id.startsWith('.') ? data[0].id.slice(1) : data[0].id;
+      dispatch({ field: 'currentModel', value: LlamaModels[modelId as LlamaModelID] });
+    }
   }, [data, dispatch]);
 
-  useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
-  }, [dispatch, error, getModelsError]);
+  // This won't be needed because if the it's an Error, then currentModel will be null. In that case we will have to choose the model.
+  // useEffect(() => {
+  //   dispatch({ field: 'modelError', value: getModelsError(error) });
+  // }, [dispatch, error, getModelsError]);
 
   // FETCH MODELS ----------------------------------------------
 
@@ -109,6 +120,10 @@ const Home = ({
 
     saveConversation(conversation);
   };
+
+  const handleUpdateCurrentModel = (model: LlamaModel | null) => {
+    dispatch({ field: 'currentModel', value: model });
+  }
 
   // FOLDER OPERATIONS  --------------------------------------------
 
@@ -186,10 +201,10 @@ const Home = ({
       name: t('New Conversation'),
       messages: [],
       model: lastConversation?.model || {
-        id: OpenAIModels[defaultModelId].id,
-        name: OpenAIModels[defaultModelId].name,
-        maxLength: OpenAIModels[defaultModelId].maxLength,
-        tokenLimit: OpenAIModels[defaultModelId].tokenLimit,
+        id: LlamaModels[defaultModelId].id,
+        name: LlamaModels[defaultModelId].name,
+        maxLength: LlamaModels[defaultModelId].maxLength,
+        tokenLimit: LlamaModels[defaultModelId].tokenLimit,
       },
       prompt: DEFAULT_SYSTEM_PROMPT,
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
@@ -333,7 +348,7 @@ const Home = ({
           id: uuidv4(),
           name: t('New Conversation'),
           messages: [],
-          model: OpenAIModels[defaultModelId],
+          model: LlamaModels[defaultModelId],
           prompt: DEFAULT_SYSTEM_PROMPT,
           temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
           folderId: null,
@@ -356,6 +371,7 @@ const Home = ({
         handleDeleteFolder,
         handleUpdateFolder,
         handleSelectConversation,
+        handleUpdateCurrentModel,
         handleUpdateConversation,
       }}
     >
@@ -398,8 +414,8 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const defaultModelId =
     (process.env.DEFAULT_MODEL &&
-      Object.values(OpenAIModelID).includes(
-        process.env.DEFAULT_MODEL as OpenAIModelID,
+      Object.values(LlamaModelID).includes(
+        process.env.DEFAULT_MODEL as LlamaModelID,
       ) &&
       process.env.DEFAULT_MODEL) ||
     fallbackModelID;

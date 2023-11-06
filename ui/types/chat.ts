@@ -1,4 +1,4 @@
-import { OpenAIModel } from './openai';
+import { LlamaModel } from './openai';
 
 export interface Message {
   role: Role;
@@ -8,7 +8,7 @@ export interface Message {
 export type Role = 'assistant' | 'user';
 
 export interface ChatBody {
-  model: OpenAIModel;
+  model: LlamaModel;
   messages: Message[];
   key: string;
   prompt: string;
@@ -19,7 +19,7 @@ export interface Conversation {
   id: string;
   name: string;
   messages: Message[];
-  model: OpenAIModel;
+  model: LlamaModel;
   prompt: string;
   temperature: number;
   folderId: string | null;

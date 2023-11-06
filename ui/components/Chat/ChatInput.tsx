@@ -27,6 +27,7 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
@@ -48,7 +49,7 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: { selectedConversation, currentModel, messageIsStreaming, prompts },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
@@ -71,7 +72,8 @@ export const ChatInput = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = selectedConversation?.model.maxLength;
+    // There might be a bug introduced by this line
+    const maxLength = currentModel?.maxLength;
 
     if (maxLength && value.length > maxLength) {
       alert(
@@ -92,8 +94,13 @@ export const ChatInput = ({
       return;
     }
 
+    if (!currentModel) {
+      toast.error(t('Please select a model'));
+      return;
+    }
+
     if (!content) {
-      alert(t('Please enter a message'));
+      toast.error(t('Please enter a message'));
       return;
     }
 

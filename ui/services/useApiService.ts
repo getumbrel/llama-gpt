@@ -25,7 +25,7 @@ const useApiService = () => {
   // 	[fetchService]
   // );
 
-  const getModels = useCallback(
+  const getRunningModel = useCallback(
     (params: GetModelsRequestProps, signal?: AbortSignal) => {
       return fetchService.post<GetModelsRequestProps>(`/api/models`, {
         body: { key: params.key },
@@ -39,7 +39,7 @@ const useApiService = () => {
   );
 
   return {
-    getModels,
+    getRunningModel,
   };
 };
 
