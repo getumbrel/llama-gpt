@@ -186,16 +186,16 @@ llama_cpp_python_installed=$(pip3 list | grep -q llama-cpp-python && echo "insta
 if [[ "$llama_cpp_python_installed" == "not installed" ]]; then
     echo "llama-cpp-python is not installed. Installing..."
     if [[ "$model_type" == "ggml" ]]; then
-        install_llama_cpp_python "GGML" "0.1.78"
+        install_llama_cpp_python "GGML" "0.2.18"
     else
-        install_llama_cpp_python "GGUF" "0.1.80"
+        install_llama_cpp_python "GGUF" "0.2.18"
     fi
 else
     echo "llama-cpp-python is installed."
     if [[ "$model_type" == "ggml" ]]; then
-        install_llama_cpp_python "GGML" "0.1.78"
+        install_llama_cpp_python "GGML" "0.2.18"
     else
-        install_llama_cpp_python "GGUF" "0.1.80"
+        install_llama_cpp_python "GGUF" "0.2.18"
     fi
 fi
 
