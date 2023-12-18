@@ -163,6 +163,14 @@ kubectl apply -k deploy/kubernetes/. -n llama
 
 Expose your service however you would normally do that.
 
+#### Extra steps to run on OpenShift
+
+When deploying to OpenShift add the privileged scc to the namespace service account
+
+```bash
+oc adm policy add-scc-to-user privileged -z default -n llama
+```
+
 ## OpenAI compatible API
 
 Thanks to llama-cpp-python, a drop-in replacement for OpenAI API is available at `http://localhost:3001`. Open http://localhost:3001/docs to see the API documentation.
