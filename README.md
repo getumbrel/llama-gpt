@@ -12,7 +12,7 @@
     <br />
     <br />
     <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
-    <br />
+    <br /> 
     <br />
     <a href="https://twitter.com/umbrel">
       <img src="https://img.shields.io/twitter/follow/umbrel?style=social" />
@@ -84,10 +84,23 @@ git clone https://github.com/getumbrel/llama-gpt.git
 cd llama-gpt
 ```
 
+
 Run LlamaGPT with the following command:
 
 ```
 ./run-mac.sh --model 7b
+```
+
+Run LlamaGPT with the following command (zsh):
+
+```
+zsh ./run-mac.sh --model 7b
+```
+
+Install Docker first if necessary 
+
+```
+brew install docker
 ```
 
 You can access LlamaGPT at http://localhost:3000.
@@ -155,7 +168,7 @@ To deploy to Kubernetes first create a namespace:
 kubectl create ns llama
 ```
 
-Then apply the manifests under the `/deploy/kubernetes` directory with
+Then, apply the manifests under the `/deploy/kubernetes` directory with
 
 ```bash
 kubectl apply -k deploy/kubernetes/. -n llama
