@@ -12,7 +12,7 @@
     <br />
     <br />
     <a href="https://umbrel.com"><strong>umbrel.com (we're hiring) »</strong></a>
-    <br />
+    <br /> 
     <br />
     <a href="https://twitter.com/umbrel">
       <img src="https://img.shields.io/twitter/follow/umbrel?style=social" />
@@ -168,7 +168,7 @@ To deploy to Kubernetes first create a namespace:
 kubectl create ns llama
 ```
 
-Then apply the manifests under the `/deploy/kubernetes` directory with
+Then, apply the manifests under the `/deploy/kubernetes` directory with
 
 ```bash
 kubectl apply -k deploy/kubernetes/. -n llama
