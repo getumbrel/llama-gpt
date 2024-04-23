@@ -13,6 +13,8 @@ export enum OpenAIModelID {
   GPT_4 = 'gpt-4',
   GPT_4_32K = 'gpt-4-32k',
 
+  LLAMA_3_8b_Q4_K_M = '/models/Meta-Llama-3-8B-Instruct.Q4_K_M.gguf',
+
   LLAMA_7B_CHAT_GGMLV3_Q4_0 = '/models/llama-2-7b-chat.bin',
   LLAMA_13B_CHAT_GGMLV3_Q4_0 = '/models/llama-2-13b-chat.bin',
   LLAMA_70B_CHAT_GGMLV3_Q4_0 = '/models/llama-2-70b-chat.bin',
@@ -34,6 +36,12 @@ export enum OpenAIModelID {
 export const fallbackModelID = OpenAIModelID.LLAMA_7B_CHAT_GGMLV3_Q4_0;
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
+  [OpenAIModelID.LLAMA_3_8b_Q4_K_M]: {
+    id: OpenAIModelID.LLAMA_3_8b_Q4_K_M,
+    name: 'LLAMA 3 8B',
+    maxLength: 12000,
+    tokenLimit: 4000,
+  },
   [OpenAIModelID.GPT_3_5]: {
     id: OpenAIModelID.GPT_3_5,
     name: 'GPT-3.5',

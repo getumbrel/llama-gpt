@@ -30,6 +30,13 @@ model_type="gguf"
 
 # Export the model value as an environment variable
 case $model in
+    llama3-8b)
+        export MODEL_NAME="Meta-Llama-3-8B-Instruct.Q4_K_M.gguf"
+        export MODEL_DOWNLOAD_URL="https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/resolve/main/Meta-Llama-3-8B-Instruct.Q4_K_M.gguf"
+        export WAIT_TIMEOUT=3600
+        export N_GQA=1
+        model_type="gguf"
+        ;;
     7b)
         export MODEL_NAME="llama-2-7b-chat.bin"
         export MODEL_DOWNLOAD_URL="https://huggingface.co/TheBloke/Nous-Hermes-Llama-2-7B-GGML/resolve/main/nous-hermes-llama-2-7b.ggmlv3.q4_0.bin"

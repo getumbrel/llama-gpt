@@ -3,7 +3,7 @@ version: '3.6'
 services:
   llama-gpt-api:
     # Pin to llama-cpp-python 0.1.80 with GGUF support
-    image: ghcr.io/abetlen/llama-cpp-python:latest@sha256:de0fd227f348b5e43d4b5b7300f1344e712c14132914d1332182e9ecfde502b2
+    image: ghcr.io/abetlen/llama-cpp-python:v0.2.63
     restart: on-failure
     volumes:
       - './models:/models'
@@ -11,8 +11,8 @@ services:
     ports:
       - 3001:8000
     environment:
-      MODEL: '/models/${MODEL_NAME:-code-llama-2-7b-chat.gguf}'
-      MODEL_DOWNLOAD_URL: '${MODEL_DOWNLOAD_URL:-https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q4_K_M.gguf}'
+      MODEL: '/models/${MODEL_NAME:-Meta-Llama-3-8B-Instruct.Q4_K_M.gguf}'
+      MODEL_DOWNLOAD_URL: '${MODEL_DOWNLOAD_URL:-https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/resolve/main/Meta-Llama-3-8B-Instruct.Q4_K_M.gguf}'
       N_GQA: '${N_GQA:-1}'
       USE_MLOCK: 1
     cap_add:
@@ -31,7 +31,7 @@ services:
     environment:
       - 'OPENAI_API_KEY=sk-XXXXXXXXXXXXXXXXXXXX'
       - 'OPENAI_API_HOST=http://llama-gpt-api:8000'
-      - 'DEFAULT_MODEL=/models/${MODEL_NAME:-llama-2-7b-chat.bin}'
+      - 'DEFAULT_MODEL=/models/${MODEL_NAME:-Meta-Llama-3-8B-Instruct.Q4_K_M.gguf}'
       - 'NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT=${DEFAULT_SYSTEM_PROMPT:-"You are a helpful and friendly AI assistant. Respond very concisely."}'
       - 'WAIT_HOSTS=llama-gpt-api:8000'
       - 'WAIT_TIMEOUT=${WAIT_TIMEOUT:-3600}'
