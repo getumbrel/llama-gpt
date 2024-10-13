@@ -1,9 +1,16 @@
 #!/bin/bash
 
-# Check if docker compose is installed
+# Check if docker is installed
 if ! command -v docker &> /dev/null
 then
     echo "Docker could not be found. Please install Docker and try again."
+    exit
+fi
+
+# Check if docker composeis installed
+if ! docker compose version &> /dev/null
+then
+    echo "\"Docker compose\" could not be found. Please install \"Docker compose\" and try again."
     exit
 fi
 
