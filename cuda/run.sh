@@ -33,9 +33,6 @@
      echo "$MODEL model found."
  fi
 
-# Build the project
-make build
-
 # Get the number of available CPU threads
 n_threads=$(grep -c ^processor /proc/cpuinfo)
 
